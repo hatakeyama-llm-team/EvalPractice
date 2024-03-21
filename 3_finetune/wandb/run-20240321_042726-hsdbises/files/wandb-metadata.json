@@ -1,0 +1,228 @@
+{
+    "os": "Linux-6.2.0-39-generic-x86_64-with-glibc2.35",
+    "python": "3.11.8",
+    "heartbeatAt": "2024-03-20T19:27:26.949473",
+    "startedAt": "2024-03-20T19:27:26.383186",
+    "docker": null,
+    "cuda": null,
+    "args": [
+        "--num_train_epochs",
+        "1",
+        "--per_device_train_batch_size",
+        "1",
+        "--learning_rate",
+        "1e-5",
+        "--warmup_ratio",
+        "0.1",
+        "--lr_scheduler_type",
+        "cosine",
+        "--bf16",
+        "--data_files",
+        "./llm-jp-sft/data/example.jsonl",
+        "--model_name_or_path",
+        "stockmark/gpt-neox-japanese-1.4b",
+        "--output_dir",
+        "../data/model/test",
+        "--instruction_template",
+        "### \u6307\u793a:",
+        "--response_template",
+        "### \u5fdc\u7b54:"
+    ],
+    "state": "running",
+    "program": "/data/2023/1505llmmatsu/finetune_and_eval_practices/3_finetune/./llm-jp-sft/train.py",
+    "codePathLocal": "llm-jp-sft/train.py",
+    "codePath": "llm-jp-sft/train.py",
+    "host": "SYS-551A-T-Workstation",
+    "username": "setup",
+    "executable": "/home/setup/miniconda3/envs/scr/bin/python",
+    "cpu_count": 16,
+    "cpu_count_logical": 32,
+    "cpu_freq": {
+        "current": 1390.7845937499999,
+        "min": 800.0,
+        "max": 4537.5
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 803.091,
+            "min": 800.0,
+            "max": 4500.0
+        },
+        {
+            "current": 800.0,
+            "min": 800.0,
+            "max": 4500.0
+        },
+        {
+            "current": 800.854,
+            "min": 800.0,
+            "max": 4500.0
+        },
+        {
+            "current": 800.0,
+            "min": 800.0,
+            "max": 4500.0
+        },
+        {
+            "current": 799.57,
+            "min": 800.0,
+            "max": 4500.0
+        },
+        {
+            "current": 3101.022,
+            "min": 800.0,
+            "max": 4500.0
+        },
+        {
+            "current": 2113.144,
+            "min": 800.0,
+            "max": 4500.0
+        },
+        {
+            "current": 2700.948,
+            "min": 800.0,
+            "max": 4500.0
+        },
+        {
+            "current": 1620.708,
+            "min": 800.0,
+            "max": 4500.0
+        },
+        {
+            "current": 800.411,
+            "min": 800.0,
+            "max": 4500.0
+        },
+        {
+            "current": 800.0,
+            "min": 800.0,
+            "max": 4600.0
+        },
+        {
+            "current": 800.0,
+            "min": 800.0,
+            "max": 4500.0
+        },
+        {
+            "current": 1992.193,
+            "min": 800.0,
+            "max": 4700.0
+        },
+        {
+            "current": 2884.563,
+            "min": 800.0,
+            "max": 4600.0
+        },
+        {
+            "current": 3700.0,
+            "min": 800.0,
+            "max": 4700.0
+        },
+        {
+            "current": 2708.077,
+            "min": 800.0,
+            "max": 4500.0
+        },
+        {
+            "current": 799.382,
+            "min": 800.0,
+            "max": 4500.0
+        },
+        {
+            "current": 798.758,
+            "min": 800.0,
+            "max": 4500.0
+        },
+        {
+            "current": 800.0,
+            "min": 800.0,
+            "max": 4500.0
+        },
+        {
+            "current": 801.998,
+            "min": 800.0,
+            "max": 4500.0
+        },
+        {
+            "current": 800.0,
+            "min": 800.0,
+            "max": 4500.0
+        },
+        {
+            "current": 3106.485,
+            "min": 800.0,
+            "max": 4500.0
+        },
+        {
+            "current": 1869.17,
+            "min": 800.0,
+            "max": 4500.0
+        },
+        {
+            "current": 2745.382,
+            "min": 800.0,
+            "max": 4500.0
+        },
+        {
+            "current": 1610.189,
+            "min": 800.0,
+            "max": 4500.0
+        },
+        {
+            "current": 801.202,
+            "min": 800.0,
+            "max": 4500.0
+        },
+        {
+            "current": 800.0,
+            "min": 800.0,
+            "max": 4600.0
+        },
+        {
+            "current": 800.602,
+            "min": 800.0,
+            "max": 4500.0
+        },
+        {
+            "current": 2232.151,
+            "min": 800.0,
+            "max": 4700.0
+        },
+        {
+            "current": 2345.957,
+            "min": 800.0,
+            "max": 4600.0
+        },
+        {
+            "current": 3700.0,
+            "min": 800.0,
+            "max": 4700.0
+        },
+        {
+            "current": 2807.658,
+            "min": 800.0,
+            "max": 4500.0
+        }
+    ],
+    "disk": {
+        "/": {
+            "total": 1758.8579597473145,
+            "used": 96.13516998291016
+        }
+    },
+    "gpu": "NVIDIA A100 80GB PCIe",
+    "gpu_count": 2,
+    "gpu_devices": [
+        {
+            "name": "NVIDIA A100 80GB PCIe",
+            "memory_total": 85899345920
+        },
+        {
+            "name": "NVIDIA A100 80GB PCIe",
+            "memory_total": 85899345920
+        }
+    ],
+    "memory": {
+        "total": 503.3507423400879
+    }
+}
