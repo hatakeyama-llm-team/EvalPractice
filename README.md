@@ -73,6 +73,7 @@ python ./llm-jp-sft/train.py \
 ~~~
 
 ### 評価
+- GPT4-turboを使った場合､2回の評価に$2程度?
 ~~~
 conda activate llmeval
 cd 4_eval/llm-leaderboard

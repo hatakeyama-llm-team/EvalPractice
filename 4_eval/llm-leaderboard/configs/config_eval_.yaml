@@ -33,18 +33,14 @@ mtbench:
   conv_name: custom
   conv_role_message_separator: ": \n"
   conv_role_only_separator: ": \n"
-  conv_roles: "('\u6307\u793A', '\u5FDC\u7B54')"
+  conv_roles: ('指示', '応答')
   conv_sep: '
 
 
     ### '
   conv_stop_str: '###'
   conv_stop_token_ids: '[2]'
-  conv_system_message: "\u4EE5\u4E0B\u306F\u3001\u30BF\u30B9\u30AF\u3092\u8AAC\u660E\
-    \u3059\u308B\u6307\u793A\u3068\u3001\u6587\u8108\u306E\u3042\u308B\u5165\u529B\
-    \u306E\u7D44\u307F\u5408\u308F\u305B\u3067\u3059\u3002\u8981\u6C42\u3092\u9069\
-    \u5207\u306B\u6E80\u305F\u3059\u5FDC\u7B54\u3092\u66F8\u304D\u306A\u3055\u3044\
-    \u3002"
+  conv_system_message: 以下は、タスクを説明する指示と、文脈のある入力の組み合わせです。要求を適切に満たす応答を書きなさい。
   custom_conv_template: false
   dtype: bfloat16
   first_n: null
@@ -74,4 +70,4 @@ wandb:
   entity: kanhatakeyamas
   log: true
   project: llmeval
-  run_name: 20240323_005501test
+  run_name: 20240323_011158test

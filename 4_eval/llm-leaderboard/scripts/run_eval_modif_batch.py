@@ -16,7 +16,7 @@ print("lang: ", os.environ["LANG"])
 print("openai apikey available?: ",
       os.environ["OPENAI_API_KEY"] == os.environ["OPENAI_API_KEY"])
 
-config_name = "configs/config_eval.yaml"
+config_name = "configs/config_eval_.yaml"
 # Configuration loading
 if os.path.exists(config_name):
     cfg = OmegaConf.load(config_name)
