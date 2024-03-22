@@ -12,6 +12,9 @@ pip3 install -r llm-leaderboard/requirements.txt
 pip install langchain-anthropic
 ~~~
 
+## データセットのダウンロード
+- [こちらを実行](./3_finetune/1_prepare_inst_dataset.py)
+
 ## fastchatの更新
 - 公式版は24/3/23時点で
   - temp, temperatureのtypoバグ有り
@@ -54,6 +57,7 @@ run_name: "test1"
   - llama, llm-jp以外のモデルの場合､adapterを自分で指定する必要あり
     - [train.py](3_finetune/llm-jp-sft/train.py)の50行目付近を編集する
   - use_peft falseの場合は､通常のフルパラファインチューニング
+    - 1bモデルで70GBほどのVRAMを使います
     - 7bの場合､A100(80GB) x2でもVRAMは足りないので注意
 
 ~~~

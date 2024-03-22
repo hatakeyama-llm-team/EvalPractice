@@ -2,7 +2,7 @@ wandb:
   log: True
   entity: "kanhatakeyamas" # TODO
   project: "llmeval" # TODO
-  run_name: "test1" # ご自身のteam名の後(/以降)、実験管理用にお好きな名前をつけてください
+  run_name: "gpt-neox-japanese-1.4b_dolly_ichikara" # ご自身のteam名の後(/以降)、実験管理用にお好きな名前をつけてください
 
 github_version: v2.0.0 #for recording
 
@@ -15,7 +15,7 @@ api: false
 model:
   use_wandb_artifacts: false
   artifacts_path: ""
-  pretrained_model_name_or_path: "../../data/model/test"
+  pretrained_model_name_or_path: "../../data/model/test_dolly_ichikara"
   trust_remote_code: true
   device_map: "auto"
   load_in_8bit: false
