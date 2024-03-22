@@ -9,10 +9,12 @@ from llm_jp_eval.evaluator import evaluate
 from mtbench_eval import mtbench_evaluate
 from config_singleton import WandbConfigSingleton
 from cleanup import cleanup_gpu
-
+os.environ["OPENAI_MODEL_NAME"] = "gpt-4-0125-preview"
 print("env")
-# print(os.environ["LANG"])
-# print(os.environ["OPENAI_API_KEY"])
+print("eval model name: ", os.environ.get("OPENAI_MODEL_NAME"))
+print("lang: ", os.environ["LANG"])
+print("openai apikey available?: ",
+      os.environ["OPENAI_API_KEY"] == os.environ["OPENAI_API_KEY"])
 
 config_name = "configs/config_eval.yaml"
 # Configuration loading

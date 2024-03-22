@@ -78,8 +78,8 @@ mtbench:
   max_gpu_memory: null
   dtype: bfloat16 # None or float32 or float16 or bfloat16
   # for gen_judgment
-  judge_model: "gpt-4-turbo-preview"
-#  judge_model: "gpt-4"
+  #judge_model: "gpt-4-turbo-preview"
+  judge_model: "gpt-4"
   mode: "single"
   baseline_model: null
   parallel: 1
