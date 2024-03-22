@@ -33,10 +33,13 @@ OPENAI_MODEL_NAME=gpt-4-0125-preview
 
 ## jglue_evalのfix bug (3/23時点)
 - [jglue_eval](4_eval/llm-leaderboard/scripts/jglue_eval.py)の305,321行目付近に､cfg=cfgを入れる必要有り
+- このレポジトリでは対応済み
 
 ## wandb関連
-- [config](./4_eval/llm-leaderboard/configs/config_eval.yaml)を修正する
-  - 例
+- 評価用に､[新規プロジェクトをwandb上で作ります](https://wandb.ai/new-project)
+- [config](./4_eval/llm-leaderboard/configs/config_eval.yaml)を修正します｡
+  - entity,projectは､上記のurlから作成したもの
+  - run_nameは適当
 ~~~
 entity: "kanhatakeyamas" 
 project: "llmeval" 
@@ -47,7 +50,12 @@ run_name: "test1"
 ## 実行
 ### ファインチューニング
 - 適当な仮想環境を作っておくこと｡
-- デフォルトはフルパラのファインチューニングなので､VRAMに注意
+- use_peft trueとすると､LoRAで学習が進む
+  - llama, llm-jp以外のモデルの場合､adapterを自分で指定する必要あり
+    - [train.py](3_finetune/llm-jp-sft/train.py)の50行目付近を編集する
+  - use_peft falseの場合は､通常のフルパラファインチューニング
+    - 7bの場合､A100(80GB) x2でもVRAMは足りないので注意
+
 ~~~
 cd 3_finetune
 dataset_file="./llm-jp-sft/data/example.jsonl" #instruction dataset
@@ -73,7 +81,7 @@ python ./llm-jp-sft/train.py \
 ~~~
 
 ### 評価
-- GPT4-turboを使った場合､2回の評価に$2程度?
+- GPT4-turboを使った場合､1回の評価に2-3ドル程度?
 ~~~
 conda activate llmeval
 cd 4_eval/llm-leaderboard
@@ -82,7 +90,7 @@ python scripts/run_eval_modif.py
 
 
 
-# 自動のモデル構築と評価
+# 自動のモデル構築と評価(仮)
 - データセットのサイズなどを変えながら､自動評価していきます
 - [ファインチューニング](./3_finetune/2_auto_finetune.py)
 - [評価](./4_eval/llm-leaderboard/auto_eval.py)
