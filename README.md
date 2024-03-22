@@ -81,3 +81,8 @@ python scripts/run_eval_modif.py
 ~~~
 
 
+
+# 自動のモデル構築と評価
+- データセットのサイズなどを変えながら､自動評価していきます
+- [ファインチューニング](./3_finetune/2_auto_finetune.py)
+- [評価](./4_eval/llm-leaderboard/auto_eval.py)
