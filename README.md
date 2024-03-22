@@ -49,7 +49,9 @@ run_name: "test1"
 cd 3_finetune
 dataset_file="./llm-jp-sft/data/example.jsonl" #instruction dataset
 input_model="stockmark/gpt-neox-japanese-1.4b" #base model
-input_model="cyberagent/open-calm-7b"
+input_model="matsuo-lab/weblab-10b"
+input_model="mistralai/Mistral-7B-v0.1"
+input_model="tokyotech-llm/Swallow-MS-7b-v0.1"
 output_dir="../data/model/test"
 
 # Finetunes the pretrained model.
@@ -65,7 +67,7 @@ python ./llm-jp-sft/train.py \
     --output_dir ${output_dir} \
     --instruction_template "### 指示:" \
     --response_template "### 応答:" \
-    #--use_peft true # loraを使う場合
+    --use_peft true # loraを使う場合
     #2>&1 | tee ${log_path}/${host}_${current_time}.log
 ~~~
 

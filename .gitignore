@@ -132,3 +132,4 @@ data/*
 4_eval/llm-leaderboard/wandb/*
 3_finetune/wandb/*
 3_finetune/wandb
+3_finetune/data
