@@ -87,6 +87,9 @@ python ./llm-jp-sft/train.py \
 ### 評価
 - GPT4-turboを使った場合､1回の評価に2-3ドル程度?
 ~~~
+
+OPENAI_MODEL_NAME=gpt-4-0125-preview # gpt-4 turboを使う場合(デフォルトはgpt-4)
+
 conda activate llmeval
 cd 4_eval/llm-leaderboard
 python scripts/run_eval_modif.py
