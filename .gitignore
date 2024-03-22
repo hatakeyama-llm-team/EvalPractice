@@ -127,5 +127,6 @@ dmypy.json
 
 data/*
 4_eval/llm-leaderboard/artifacts/*
+4_eval/llm-leaderboard/wandb
+4_eval/llm-leaderboard/FastChat/fastchat/llm_judge/data/*
 4_eval/llm-leaderboard/wandb/*
-4_eval/llm-leaderboard/*
