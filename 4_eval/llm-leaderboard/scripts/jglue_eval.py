@@ -31,10 +31,12 @@ from llm_jp_eval.utils import (
 from typing import Optional, Tuple
 from statistics import mean
 
+
 def post_process_score_results(
-    score_results: dict[str, float]) -> Tuple[dict[str, str], dict[str, list[str]]]:
+        score_results: dict[str, float]) -> Tuple[dict[str, str], dict[str, list[str]]]:
     score_results["AVG"] = mean(score_results.values())
-    post_processed_score_results: dict[str, str] = {f"jgule_{k}": f"{v:.4f}" for k, v in sorted(score_results.items())}
+    post_processed_score_results: dict[str, str] = {
+        f"jgule_{k}": f"{v:.4f}" for k, v in sorted(score_results.items())}
     return post_processed_score_results
 
 
@@ -65,12 +67,13 @@ def evaluate():
     ]
 
     for target_dataset in target_datasets:
-            target_dataset_path: Path = Path(cfg.dataset_dir) / f"{target_dataset}.json"
-            if not target_dataset_path.exists():
-                artifact = run.use_artifact(cfg.dataset_artifact, type="dataset")
-                artifact_dir = artifact.download()
-                cfg.dataset_dir = artifact_dir + cfg.dataset_dir
-                break
+        target_dataset_path: Path = Path(
+            cfg.dataset_dir) / f"{target_dataset}.json"
+        if not target_dataset_path.exists():
+            artifact = run.use_artifact(cfg.dataset_artifact, type="dataset")
+            artifact_dir = artifact.download()
+            cfg.dataset_dir = artifact_dir + cfg.dataset_dir
+            break
 
     wandb_outputs_table = wandb.Table(
         columns=[
@@ -143,7 +146,8 @@ def evaluate():
         elif cfg.torch_dtype == "fp32":
             torch_dtype = torch.float32
         else:
-            raise ValueError("torch_dtype must be bf16 or fp16. Other types are not supported.")
+            raise ValueError(
+                "torch_dtype must be bf16 or fp16. Other types are not supported.")
 
         if cfg.model.use_wandb_artifacts:
             artifact_tokinizer = run.use_artifact(cfg.tokenizer.artifacts_path)
@@ -203,9 +207,11 @@ def evaluate():
     output_results: dict[str, list[dict[str, str]]] = {}
     with torch.inference_mode():
         for target_dataset in target_datasets:
-            target_dataset_path: Path = Path(cfg.dataset_dir) / f"{target_dataset}.json"
+            target_dataset_path: Path = Path(
+                cfg.dataset_dir) / f"{target_dataset}.json"
             if not target_dataset_path.exists():
-                print(f"skip {target_dataset} because it is not found in {cfg.dataset_dir}")
+                print(
+                    f"skip {target_dataset} because it is not found in {cfg.dataset_dir}")
                 continue
             with Path(f"{cfg.dataset_dir}/{target_dataset}.json").open(encoding="utf-8") as f:
                 target_data = json.load(f)
@@ -220,7 +226,8 @@ def evaluate():
             else:
                 custom_fewshots_template = None
 
-            few_shots = get_few_shot_samples(target_dataset_path, cfg.metainfo.num_few_shots)
+            few_shots = get_few_shot_samples(
+                target_dataset_path, cfg.metainfo.num_few_shots)
 
             prompt: BasePromptTemplate = get_evaluation_prompt(
                 target_data["instruction"],
@@ -230,24 +237,32 @@ def evaluate():
             )
 
             if cfg.api == "openai":
-                llm = ChatOpenAI(model_name=cfg.model.pretrained_model_name_or_path)
+                llm = ChatOpenAI(
+                    model_name=cfg.model.pretrained_model_name_or_path)
             elif cfg.api == "anthoropic":  # added for leaderboard
-                llm = ChatAnthropic(model=cfg.model.pretrained_model_name_or_path, anthropic_api_key=anthropic_api_key)
+                llm = ChatAnthropic(
+                    model=cfg.model.pretrained_model_name_or_path, anthropic_api_key=anthropic_api_key)
             elif cfg.api == "cohere":
                 llm = Cohere(model=cfg.model.pretrained_model_name_or_path)
             elif cfg.api == "amazon_bedrock":
                 llm = Bedrock(model_id=cfg.model.pretrained_model_name_or_path)
             elif cfg.api == "mistral":
                 llm = ChatMistralAI(
-                    model=cfg.model.pretrained_model_name_or_path, mistral_api_key=os.environ.get("MISTRAL_API_KEY")
+                    model=cfg.model.pretrained_model_name_or_path, mistral_api_key=os.environ.get(
+                        "MISTRAL_API_KEY")
                 )
             elif cfg.api == "google":
-                llm = ChatGoogleGenerativeAI(model=cfg.model.pretrained_model_name_or_path)
+                llm = ChatGoogleGenerativeAI(
+                    model=cfg.model.pretrained_model_name_or_path)
                 safety_settings_NONE = [
-                    {"category": "HARM_CATEGORY_HARASSMENT", "threshold": "BLOCK_NONE"},
-                    {"category": "HARM_CATEGORY_HATE_SPEECH", "threshold": "BLOCK_NONE"},
-                    {"category": "HARM_CATEGORY_SEXUALLY_EXPLICIT", "threshold": "BLOCK_NONE"},
-                    {"category": "HARM_CATEGORY_DANGEROUS_CONTENT", "threshold": "BLOCK_NONE"},
+                    {"category": "HARM_CATEGORY_HARASSMENT",
+                        "threshold": "BLOCK_NONE"},
+                    {"category": "HARM_CATEGORY_HATE_SPEECH",
+                        "threshold": "BLOCK_NONE"},
+                    {"category": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+                        "threshold": "BLOCK_NONE"},
+                    {"category": "HARM_CATEGORY_DANGEROUS_CONTENT",
+                        "threshold": "BLOCK_NONE"},
                 ]
                 llm.client = genai.GenerativeModel(
                     model_name=cfg.model.pretrained_model_name_or_path, safety_settings=safety_settings_NONE
@@ -287,6 +302,7 @@ def evaluate():
 
             cfg.metainfo.data_type = "test"
             score_result, output_result = get_evaluation_result(
+                cfg=cfg,  # fix bug
                 run_name=run_name,
                 chain=overall_chain,
                 samples=target_data["samples"],
@@ -302,6 +318,7 @@ def evaluate():
             cfg_dev.metainfo.data_type = "dev"
 
             _, _ = get_evaluation_result(
+                cfg=cfg,  # fix bug
                 run_name=run_name,
                 chain=overall_chain,
                 samples=target_data["samples"],
@@ -314,7 +331,8 @@ def evaluate():
             )
 
             score_results.update(score_result)
-            output_results[target_dataset] = [{"prompt": prompt.template, **x} for x in output_result]
+            output_results[target_dataset] = [
+                {"prompt": prompt.template, **x} for x in output_result]
 
     post_processed_score_results = post_process_score_results(
         score_results,
@@ -326,7 +344,8 @@ def evaluate():
 
     jglue_leaderboard_table = wandb.Table(
         columns=list(post_processed_score_results.keys()),
-        data=[[float(value) for value in post_processed_score_results.values()]],
+        data=[[float(value)
+               for value in post_processed_score_results.values()]],
     )
 
     metainfo = OmegaConf.to_container(cfg.metainfo)
@@ -344,9 +363,11 @@ def evaluate():
     wandb_artifact = wandb.Artifact(name="output", type="dataset")
     wandb_artifact.add(jglue_leaderboard_table, "jglue_leaderboard")
     wandb_artifact.add(wandb_outputs_table, "output_test")
-    wandb_artifact.add(wandb_outputs_table_dev, "output_dev")  # add for leaderboard
+    wandb_artifact.add(wandb_outputs_table_dev,
+                       "output_dev")  # add for leaderboard
 
-    combined_df = pd.concat([leaderboard_table.get_dataframe(), jglue_leaderboard_table.get_dataframe()], axis=1)
+    combined_df = pd.concat([leaderboard_table.get_dataframe(
+    ), jglue_leaderboard_table.get_dataframe()], axis=1)
     instance.table = wandb.Table(dataframe=combined_df)
 
     if cfg.wandb.log and run is not None:

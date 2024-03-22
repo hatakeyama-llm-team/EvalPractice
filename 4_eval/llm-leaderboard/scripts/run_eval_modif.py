@@ -65,11 +65,11 @@ if cfg.wandb.log:
 
 # Evaluation phase
 # 1. llm-jp-eval evaluation
-evaluate()
+# evaluate()
 # cleanup_gpu()
 
 # 2. mt-bench evaluation
-mtbench_evaluate()
+# mtbench_evaluate()
 # cleanup_gpu()
 
 # 3. JGLUE

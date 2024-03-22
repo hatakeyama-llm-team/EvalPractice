@@ -31,6 +31,9 @@ pip install --force-reinstall git+https://github.com/hatakeyama-llm-team/FastCha
 OPENAI_MODEL_NAME=gpt-4-0125-preview
 ~~~
 
+## jglue_evalのfix bug (3/23時点)
+- [jglue_eval](4_eval/llm-leaderboard/scripts/jglue_eval.py)の305,321行目付近に､cfg=cfgを入れる必要有り
+
 ## wandb関連
 - [config](./4_eval/llm-leaderboard/configs/config_eval.yaml)を修正する
   - 例
@@ -49,9 +52,7 @@ run_name: "test1"
 cd 3_finetune
 dataset_file="./llm-jp-sft/data/example.jsonl" #instruction dataset
 input_model="stockmark/gpt-neox-japanese-1.4b" #base model
-input_model="matsuo-lab/weblab-10b"
-input_model="mistralai/Mistral-7B-v0.1"
-input_model="tokyotech-llm/Swallow-MS-7b-v0.1"
+input_model="llm-jp/llm-jp-13b-v1.0"
 output_dir="../data/model/test"
 
 # Finetunes the pretrained model.
