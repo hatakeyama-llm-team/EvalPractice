@@ -65,7 +65,7 @@ python ./llm-jp-sft/train.py \
     --output_dir ${output_dir} \
     --instruction_template "### 指示:" \
     --response_template "### 応答:" \
-    --use_peft true # loraを使う場合
+    #--use_peft true # loraを使う場合
     #2>&1 | tee ${log_path}/${host}_${current_time}.log
 ~~~
 
@@ -75,3 +75,5 @@ conda activate llmeval
 cd 4_eval/llm-leaderboard
 python scripts/run_eval_modif.py
 ~~~
+
+
