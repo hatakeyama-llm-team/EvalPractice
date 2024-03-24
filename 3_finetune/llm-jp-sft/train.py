@@ -39,6 +39,7 @@ class SFTTrainingArguments:
     peft_lora_r: int = 8
     peft_lora_alpha: int = 32
     peft_lora_dropout: float = 0.05
+    save_steps = 100000
 
     def __post_init__(self):
         if self.load_in_8bit and self.load_in_4bit:
@@ -107,6 +108,8 @@ def load_datasets(data_files):
 def main() -> None:
     parser = HfArgumentParser((TrainingArguments, SFTTrainingArguments))
     training_args, sft_training_args = parser.parse_args_into_dataclasses()
+
+    training_args.save_steps = 100000
 
     tokenizer_name_or_path: str = (
         sft_training_args.tokenizer_name_or_path or sft_training_args.model_name_or_path

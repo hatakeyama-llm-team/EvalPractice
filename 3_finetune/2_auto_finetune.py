@@ -22,8 +22,8 @@ for inst_path in inst_path_list:
         --data_files {inst_path} \
         --model_name_or_path {model_name} \
         --output_dir {out_path} \
-        --instruction_template "### 指示:" \
-        --response_template "### 応答:" \
+        --instruction_template "### 質問：" \
+        --response_template "### 回答：" \
         --gradient_checkpointing true \
     """
 
