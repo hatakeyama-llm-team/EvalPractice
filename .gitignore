@@ -133,3 +133,4 @@ data/*
 3_finetune/wandb/*
 3_finetune/wandb
 3_finetune/data
+model/*

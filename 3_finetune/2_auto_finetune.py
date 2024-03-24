@@ -3,18 +3,19 @@ import os
 
 inst_path_list = glob.glob("data/*.jsonl")
 model_name = "llm-jp/llm-jp-13b-v1.0"
+# model_name = "tokyotech-llm/Swallow-MS-7b-v0.1"
 
 
 for inst_path in inst_path_list:
     out_name = model_name+"_inst_"+inst_path
     out_name = out_name.replace(".jsonl", "").replace(
         "/", "-").replace(".", "-").replace("data-", "")
-    out_path = "..//model/"+out_name
+    out_path = "../model/"+out_name
 
     cmd = f"""python ./llm-jp-sft/train.py \
-        --num_train_epochs 1 \
+        --num_train_epochs 2 \
         --per_device_train_batch_size 1 \
-        --learning_rate 1e-5 \
+        --learning_rate 2e-5 \
         --warmup_ratio 0.1 \
         --lr_scheduler_type cosine \
         --bf16 \
@@ -23,7 +24,9 @@ for inst_path in inst_path_list:
         --output_dir {out_path} \
         --instruction_template "### 指示:" \
         --response_template "### 応答:" \
-        --use_peft true
+        --gradient_checkpointing true \
     """
 
+#        --use_peft true
+# --gradient_checkpointing true \
     os.system(cmd)

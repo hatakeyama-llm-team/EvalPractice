@@ -34,7 +34,7 @@ class SFTTrainingArguments:
     load_in_4bit: bool = False
     use_flash_attention_2: bool = False
     use_peft: bool = False
-    peft_target_model: Optional[str] = "llama-all"
+    peft_target_model: Optional[str] = "llm-jp"
     peft_target_modules: Optional[list[str]] = None
     peft_lora_r: int = 8
     peft_lora_alpha: int = 32
@@ -44,35 +44,19 @@ class SFTTrainingArguments:
         if self.load_in_8bit and self.load_in_4bit:
             raise ValueError(
                 "load_in_8bit and load_in_4bit are mutually exclusive")
-        if self.peft_target_model and self.peft_target_modules is None:
-            if self.peft_target_model == "llm-jp":
-                self.peft_target_modules = ["c_attn", "c_proj", "c_fc"]
-            elif self.peft_target_model == "llama":
-                # https://github.com/serp-ai/LLaMA-8bit-LoRA/blob/main/finetune_peft_8bit.py
-                self.peft_target_modules = [
-                    "q_proj",
-                    "k_proj",
-                    "v_proj",
-                    "o_proj",
-                ]
-            elif self.peft_target_model == "llama-all":
-                # https://note.com/kan_hatakeyama/n/ncd09c52d26c7
-                self.peft_target_modules = [
-                    "q_proj",
-                    "k_proj",
-                    "v_proj",
-                    "o_proj",
-                    "gate_proj",
-                    "up_proj",
-                    "down_proj",
-                    "lm_head",
-                    "embed_tokens",
-                ]
-            else:
-                logger.warning(
-                    f"peft_target_model '{self.peft_target_model}' is not supported, "
-                    f"so peft_target_modules is set to None."
-                )
+
+        # https://note.com/kan_hatakeyama/n/ncd09c52d26c7
+        self.peft_target_modules = [
+            "q_proj",
+            "k_proj",
+            "v_proj",
+            "o_proj",
+            # "gate_proj",
+            # "up_proj",
+            # "down_proj",
+            # "lm_head",
+            # "embed_tokens",
+        ]
 
     def from_pretrained_kwargs(self, training_args):
         if self.load_in_8bit:
@@ -118,7 +102,7 @@ def main() -> None:
         additional_special_tokens=sft_training_args.additional_special_tokens,
         trust_remote_code=True,
     )
-
+    # tokenizer.add_special_tokens({'pad_token': '[PAD]'})
     logger.info("Loading data")
 
     train_dataset = load_datasets(sft_training_args.data_files)

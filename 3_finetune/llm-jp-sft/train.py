@@ -34,7 +34,7 @@ class SFTTrainingArguments:
     load_in_4bit: bool = False
     use_flash_attention_2: bool = False
     use_peft: bool = False
-    peft_target_model: Optional[str] = "llm-jp"
+    peft_target_model: Optional[str] = "llama-all"
     peft_target_modules: Optional[list[str]] = None
     peft_lora_r: int = 8
     peft_lora_alpha: int = 32
@@ -42,7 +42,8 @@ class SFTTrainingArguments:
 
     def __post_init__(self):
         if self.load_in_8bit and self.load_in_4bit:
-            raise ValueError("load_in_8bit and load_in_4bit are mutually exclusive")
+            raise ValueError(
+                "load_in_8bit and load_in_4bit are mutually exclusive")
         if self.peft_target_model and self.peft_target_modules is None:
             if self.peft_target_model == "llm-jp":
                 self.peft_target_modules = ["c_attn", "c_proj", "c_fc"]
@@ -118,6 +119,7 @@ def main() -> None:
         trust_remote_code=True,
     )
 
+    tokenizer.add_special_tokens({'pad_token': '[PAD]'})
     logger.info("Loading data")
 
     train_dataset = load_datasets(sft_training_args.data_files)
@@ -128,9 +130,11 @@ def main() -> None:
         eval_dataset = None
 
     logger.info("Formatting prompts")
-    response_ids = tokenizer.encode(sft_training_args.response_template, add_special_tokens=False)[1:]
+    response_ids = tokenizer.encode(
+        sft_training_args.response_template, add_special_tokens=False)[1:]
     if sft_training_args.instruction_template:
-        instruction_ids = tokenizer.encode(sft_training_args.instruction_template, add_special_tokens=False)[1:]
+        instruction_ids = tokenizer.encode(
+            sft_training_args.instruction_template, add_special_tokens=False)[1:]
         collator = DataCollatorForCompletionOnlyLM(
             instruction_template=instruction_ids, response_template=response_ids, tokenizer=tokenizer
         )
@@ -147,6 +151,7 @@ def main() -> None:
     model = AutoModelForCausalLM.from_pretrained(
         sft_training_args.model_name_or_path,
         trust_remote_code=True,
+        device_map="auto",
         **kwargs,
     )
 
