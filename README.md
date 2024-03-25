@@ -78,10 +78,18 @@ python ./llm-jp-sft/train.py \
     --data_files ${dataset_file} \
     --model_name_or_path ${input_model} \
     --output_dir ${output_dir} \
-    --instruction_template "### 指示:" \
-    --response_template "### 応答:" \
+    --instruction_template "### 質問：" \
+    --response_template "### 回答：" \
     --use_peft true # loraを使う場合
     #2>&1 | tee ${log_path}/${host}_${current_time}.log
+~~~
+
+### upload
+- HuggingFaceにモデルをアップロードします｡
+- コマンド例
+~~~
+python 3_upload.py --output_tokenizer_and_model_dir ../model/llm-jp-llm-jp-13b-v1-0_inst_dolly10000 --huggingface_name llm-jp-llm-jp-13b-v1-0_inst_dolly10000
+
 ~~~
 
 ### 評価
@@ -101,3 +109,13 @@ python scripts/run_eval_modif.py
 - データセットのサイズなどを変えながら､自動評価していきます
 - [ファインチューニング](./3_finetune/2_auto_finetune.py)
 - [評価](./4_eval/llm-leaderboard/auto_eval.py)
+
+
+# TODO
+- instruct集
+- 数学系
+  - https://huggingface.co/datasets/kunishou/OpenMathInstruct-1-1.8m-ja
+- プログラミング
+  - https://huggingface.co/datasets/kunishou/amenokaku-code-instruct?
+- 一般
+  - https://huggingface.co/datasets/kunishou/HelpSteer-35k-ja?row=16
