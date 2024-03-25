@@ -119,3 +119,7 @@ python scripts/run_eval_modif.py
   - https://huggingface.co/datasets/kunishou/amenokaku-code-instruct?
 - 一般
   - https://huggingface.co/datasets/kunishou/HelpSteer-35k-ja?row=16
+  - https://huggingface.co/datasets/sudy-super/CoTangent
+
+- 酒
+  - https://huggingface.co/datasets/yuiseki/sake_qa
