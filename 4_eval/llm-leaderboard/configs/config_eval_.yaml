@@ -70,4 +70,4 @@ wandb:
   entity: kanhatakeyamas
   log: true
   project: llmeval
-  run_name: 20240326_195335llm-jp-13b-v1.0
+  run_name: 20240326_205245llm-jp-13b-v1.0

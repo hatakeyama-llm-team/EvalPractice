@@ -1,5 +1,7 @@
 import glob
 import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "0,1"
+print(os.environ["CUDA_VISIBLE_DEVICES"])
 
 inst_path_list = glob.glob("data/*.jsonl")
 print(inst_path_list)

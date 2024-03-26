@@ -3,6 +3,7 @@ import yaml
 import glob
 import datetime
 import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "2,3"
 
 # %%
 # YAMLファイルを読み込む
