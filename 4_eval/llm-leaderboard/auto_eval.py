@@ -8,10 +8,12 @@ import os
 # YAMLファイルを読み込む
 with open('configs/config_eval.yaml', 'r') as file:
     data = yaml.safe_load(file)
-model_path_list = glob.glob("../../data/model/*")
-
-# %%
-model_path = model_path_list[0]
+# model_path_list = glob.glob("../../data/model/*")
+model_path_list = [
+    "llm-jp/llm-jp-13b-v1.0",
+    # "kanhatakeyama/llm-jp-llm-jp-13b-v1-0_inst_dolly10000",
+    # "kanhatakeyama/llm-jp-llm-jp-13b-v1-0_inst_ichikara_1500",
+]
 
 for model_path in model_path_list:
     model_name = model_path.split("/")[-1]

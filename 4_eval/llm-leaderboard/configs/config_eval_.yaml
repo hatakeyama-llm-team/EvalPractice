@@ -12,7 +12,7 @@ github_version: v2.0.0
 log_dir: ./logs
 max_seq_length: 1024
 metainfo:
-  basemodel_name: test
+  basemodel_name: llm-jp-13b-v1.0
   instruction_tuning_data:
   - None
   instruction_tuning_method: None
@@ -24,7 +24,7 @@ model:
   device_map: auto
   load_in_4bit: false
   load_in_8bit: false
-  pretrained_model_name_or_path: ../../data/model/test
+  pretrained_model_name_or_path: llm-jp/llm-jp-13b-v1.0
   trust_remote_code: true
   use_wandb_artifacts: false
 mtbench:
@@ -62,7 +62,7 @@ target_dataset: all
 testmode: false
 tokenizer:
   artifacts_path: ''
-  pretrained_model_name_or_path: ../../data/model/test
+  pretrained_model_name_or_path: llm-jp/llm-jp-13b-v1.0
   use_fast: true
   use_wandb_artifacts: false
 torch_dtype: bf16
@@ -70,4 +70,4 @@ wandb:
   entity: kanhatakeyamas
   log: true
   project: llmeval
-  run_name: 20240323_011158test
+  run_name: 20240326_155032llm-jp-13b-v1.0
