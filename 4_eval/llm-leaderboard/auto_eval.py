@@ -11,8 +11,9 @@ with open('configs/config_eval.yaml', 'r') as file:
 # model_path_list = glob.glob("../../data/model/*")
 model_path_list = [
     "llm-jp/llm-jp-13b-v1.0",
-    # "kanhatakeyama/llm-jp-llm-jp-13b-v1-0_inst_dolly10000",
-    # "kanhatakeyama/llm-jp-llm-jp-13b-v1-0_inst_ichikara_1500",
+     "kanhatakeyama/llm-jp-llm-jp-13b-v1-0_inst_dolly10000",
+     "kanhatakeyama/llm-jp-llm-jp-13b-v1-0_inst_ichikara_1500",
+     "kanhatakeyama/llm-jp-llm-jp-13b-v1-0_inst_oasst40000",
 ]
 
 for model_path in model_path_list:

@@ -69,7 +69,7 @@ evaluate()
 # cleanup_gpu()
 
 # 2. mt-bench evaluation
-mtbench_evaluate()
+#mtbench_evaluate()
 # cleanup_gpu()
 
 # 3. JGLUE

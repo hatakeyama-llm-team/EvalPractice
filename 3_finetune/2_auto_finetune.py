@@ -2,6 +2,7 @@ import glob
 import os
 
 inst_path_list = glob.glob("data/*.jsonl")
+print(inst_path_list)
 model_name = "llm-jp/llm-jp-13b-v1.0"
 # model_name = "tokyotech-llm/Swallow-MS-7b-v0.1"
 
@@ -11,6 +12,7 @@ for inst_path in inst_path_list:
     out_name = out_name.replace(".jsonl", "").replace(
         "/", "-").replace(".", "-").replace("data-", "")
     out_path = "../model/"+out_name
+    eval_path=inst_path+".eval"
 
     cmd = f"""python ./llm-jp-sft/train.py \
         --num_train_epochs 2 \
@@ -20,6 +22,7 @@ for inst_path in inst_path_list:
         --lr_scheduler_type cosine \
         --bf16 \
         --data_files {inst_path} \
+        --eval_data_files {eval_path} \
         --model_name_or_path {model_name} \
         --output_dir {out_path} \
         --instruction_template "### 指示:" \
