@@ -127,6 +127,7 @@ def main() -> None:
 
     train_dataset = load_datasets(sft_training_args.data_files)
     if sft_training_args.eval_data_files:
+        print("do eval")
         eval_dataset = load_datasets(sft_training_args.eval_data_files)
         training_args.do_eval = True
     else:
