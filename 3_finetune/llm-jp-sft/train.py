@@ -39,7 +39,6 @@ class SFTTrainingArguments:
     peft_lora_r: int = 8
     peft_lora_alpha: int = 32
     peft_lora_dropout: float = 0.05
-    save_steps = 100000
 
     def __post_init__(self):
         if self.load_in_8bit and self.load_in_4bit:
@@ -109,8 +108,8 @@ def main() -> None:
     parser = HfArgumentParser((TrainingArguments, SFTTrainingArguments))
     training_args, sft_training_args = parser.parse_args_into_dataclasses()
 
-    training_args.save_steps = 100000
-
+    # training_args.save_steps = 100000
+    training_args.save_strategy = "epoch"
     tokenizer_name_or_path: str = (
         sft_training_args.tokenizer_name_or_path or sft_training_args.model_name_or_path
     )
@@ -130,6 +129,7 @@ def main() -> None:
         print("do eval")
         eval_dataset = load_datasets(sft_training_args.eval_data_files)
         training_args.do_eval = True
+        training_args.evaluation_strategy = "epoch"
     else:
         eval_dataset = None
 
@@ -190,6 +190,7 @@ def main() -> None:
         data_collator=collator,
         peft_config=peft_config,
         max_seq_length=sft_training_args.max_seq_length,
+        neftune_noise_alpha=5,  # NEFTune https://qiita.com/m__k/items/23ced0db6846e97d41cd
     )
 
     logger.info("Training")

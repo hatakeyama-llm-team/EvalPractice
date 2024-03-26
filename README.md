@@ -120,6 +120,7 @@ python scripts/run_eval_modif.py
 - 一般
   - https://huggingface.co/datasets/kunishou/HelpSteer-35k-ja?row=16
   - https://huggingface.co/datasets/sudy-super/CoTangent
+  - https://huggingface.co/datasets/izumi-lab/llm-japanese-dataset
 
 - 酒
   - https://huggingface.co/datasets/yuiseki/sake_qa

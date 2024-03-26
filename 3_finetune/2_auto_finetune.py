@@ -14,11 +14,12 @@ for inst_path in inst_path_list:
     out_name = out_name.replace(".jsonl", "").replace(
         "/", "-").replace(".", "-").replace("data-", "")
     out_path = "../model/"+out_name
-    eval_path=inst_path+".eval"
+    eval_path = inst_path+".eval"
 
     cmd = f"""python ./llm-jp-sft/train.py \
-        --num_train_epochs 2 \
+        --num_train_epochs 3 \
         --per_device_train_batch_size 1 \
+        --per_device_eval_batch_size 3 \
         --learning_rate 2e-5 \
         --warmup_ratio 0.1 \
         --lr_scheduler_type cosine \
@@ -27,8 +28,8 @@ for inst_path in inst_path_list:
         --eval_data_files {eval_path} \
         --model_name_or_path {model_name} \
         --output_dir {out_path} \
-        --instruction_template "### 指示:" \
-        --response_template "### 応答:" \
+        --instruction_template "### 指示:\n" \
+        --response_template "### 応答:\n" \
         --gradient_checkpointing true \
     """
 
