@@ -12,7 +12,7 @@ github_version: v2.0.0
 log_dir: ./logs
 max_seq_length: 1024
 metainfo:
-  basemodel_name: llm-jp-llm-jp-13b-v1-0_inst_ichikara_1500
+  basemodel_name: llm-jp-llm-jp-13b-v1-0_inst_dolly14000_lr_5e-6
   instruction_tuning_data:
   - None
   instruction_tuning_method: None
@@ -24,7 +24,7 @@ model:
   device_map: auto
   load_in_4bit: false
   load_in_8bit: false
-  pretrained_model_name_or_path: ../../model/llm-jp-llm-jp-13b-v1-0_inst_ichikara_1500
+  pretrained_model_name_or_path: ../../model/llm-jp-llm-jp-13b-v1-0_inst_dolly14000_lr_5e-6
   trust_remote_code: true
   use_wandb_artifacts: false
 mtbench:
@@ -62,7 +62,7 @@ target_dataset: all
 testmode: false
 tokenizer:
   artifacts_path: ''
-  pretrained_model_name_or_path: ../../model/llm-jp-llm-jp-13b-v1-0_inst_ichikara_1500
+  pretrained_model_name_or_path: ../../model/llm-jp-llm-jp-13b-v1-0_inst_dolly14000_lr_5e-6
   use_fast: true
   use_wandb_artifacts: false
 torch_dtype: bf16
@@ -70,4 +70,4 @@ wandb:
   entity: kanhatakeyamas
   log: true
   project: llmeval
-  run_name: 20240327_111321llm-jp-llm-jp-13b-v1-0_inst_ichikara_1500
+  run_name: 20240327_162844llm-jp-llm-jp-13b-v1-0_inst_dolly14000_lr_5e-6

@@ -3,7 +3,7 @@ import os
 os.environ["CUDA_VISIBLE_DEVICES"] = "0,1"
 print(os.environ["CUDA_VISIBLE_DEVICES"])
 
-inst_path_list = glob.glob("data/*.jsonl")
+inst_path_list = sorted(glob.glob("data/*.jsonl"))
 print(inst_path_list)
 model_name = "llm-jp/llm-jp-13b-v1.0"
 # model_name = "tokyotech-llm/Swallow-MS-7b-v0.1"

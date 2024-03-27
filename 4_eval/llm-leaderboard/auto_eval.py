@@ -17,7 +17,8 @@ model_path_list = [
     # "llm-jp/llm-jp-13b-instruct-full-jaster-dolly-oasst-v1.0",
     # "llm-jp/llm-jp-13b-instruct-full-dolly-oasst-v1.0",
     # "llm-jp/llm-jp-13b-instruct-full-jaster-v1.0",
-    "../../model/llm-jp-llm-jp-13b-v1-0_inst_ichikara_1500",
+    # "../../model/llm-jp-llm-jp-13b-v1-0_inst_ichikara_1500",
+    "../../model/llm-jp-llm-jp-13b-v1-0_inst_dolly14000_lr_5e-6",
 ]
 print(model_path_list)
 for model_path in model_path_list:
