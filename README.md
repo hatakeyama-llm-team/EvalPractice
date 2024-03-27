@@ -2,7 +2,11 @@
 - 事前学習済みモデルのファインチューニングと評価を一気通貫して行うscript
 
 # Setup
-## 標準ライブラリ群
+## ファインチューニングのライブラリ群
+- 適当な仮想環境を作る｡
+- 最近のpytorch､transformers､SFT､wandbライブラリなどを入れればOK｡(雑ですみません)
+
+## 評価の標準ライブラリ群
 ~~~
 cd 4_eval/llm-leaderboard
 conda create -n llmeval python=3.11 -y
@@ -16,7 +20,7 @@ pip install langchain-anthropic
 - [こちらを実行](./3_finetune/1_prepare_inst_dataset.py)
 
 ## fastchatの更新
-- 公式版は24/3/23時点で
+- 公式版は24/3/23時点で以下の課題があるので､修正
   - temp, temperatureのtypoバグ有り
   - また､apiがgpt-4でちょっと高価
 
@@ -52,13 +56,12 @@ run_name: "test1"
 
 ## 実行
 ### ファインチューニング
-- 適当な仮想環境を作っておくこと｡
 - use_peft trueとすると､LoRAで学習が進む
   - llama, llm-jp以外のモデルの場合､adapterを自分で指定する必要あり
     - [train.py](3_finetune/llm-jp-sft/train.py)の50行目付近を編集する
   - use_peft falseの場合は､通常のフルパラファインチューニング
     - 1bモデルで70GBほどのVRAMを使います
-    - 7bの場合､A100(80GB) x2でもVRAMは足りないので注意
+    - llm-jp-13bの場合､A100(80GB) x2でギリギリ足りるレベル
 
 ~~~
 cd 3_finetune
@@ -85,7 +88,7 @@ python ./llm-jp-sft/train.py \
 ~~~
 
 ### upload
-- HuggingFaceにモデルをアップロードします｡
+- 必要に応じて､HuggingFaceにモデルをアップロードします｡
 - コマンド例
 ~~~
 python 3_upload.py --output_tokenizer_and_model_dir ../model/llm-jp-llm-jp-13b-v1-0_inst_dolly10000 --huggingface_name llm-jp-llm-jp-13b-v1-0_inst_dolly10000
@@ -93,7 +96,10 @@ python 3_upload.py --output_tokenizer_and_model_dir ../model/llm-jp-llm-jp-13b-v
 ~~~
 
 ### 評価
-- GPT4-turboを使った場合､1回の評価に2-3ドル程度?
+- MTBenchにはGPT4での評価が必要
+  - GPT4-turboを使った場合､1回の評価に2-3ドル程度?
+- MTBenchをやらない場合は､[run_eval](./4_eval/llm-leaderboard/scripts/run_eval.py)の65行目付近にある､mtbenchをコメントアウトする
+- OPENAI_MODEL_NAMEを環境変数に設定すると､評価モデルを選べる(公式は､turboでないGPT-4)
 ~~~
 
 OPENAI_MODEL_NAME=gpt-4-0125-preview # gpt-4 turboを使う場合(デフォルトはgpt-4)
@@ -120,7 +126,6 @@ python scripts/run_eval_modif.py
 - 一般
   - https://huggingface.co/datasets/kunishou/HelpSteer-35k-ja?row=16
   - https://huggingface.co/datasets/sudy-super/CoTangent
-  - https://huggingface.co/datasets/izumi-lab/llm-japanese-dataset
 
 - 酒
   - https://huggingface.co/datasets/yuiseki/sake_qa
