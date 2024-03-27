@@ -10,9 +10,11 @@ model_name = "llm-jp/llm-jp-13b-v1.0"
 
 
 for inst_path in inst_path_list:
+    lr = "5e-6"
     out_name = model_name+"_inst_"+inst_path
     out_name = out_name.replace(".jsonl", "").replace(
         "/", "-").replace(".", "-").replace("data-", "")
+    out_name = out_name+"_lr_"+lr
     out_path = "../model/"+out_name
     eval_path = inst_path+".eval"
 
@@ -20,7 +22,7 @@ for inst_path in inst_path_list:
         --num_train_epochs 3 \
         --per_device_train_batch_size 1 \
         --per_device_eval_batch_size 3 \
-        --learning_rate 2e-5 \
+        --learning_rate {lr} \
         --warmup_ratio 0.1 \
         --lr_scheduler_type cosine \
         --bf16 \
