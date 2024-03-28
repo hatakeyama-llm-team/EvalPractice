@@ -109,7 +109,8 @@ def main() -> None:
     training_args, sft_training_args = parser.parse_args_into_dataclasses()
 
     # training_args.save_steps = 100000
-    training_args.save_strategy = "epoch"
+    #training_args.save_strategy = "epoch"
+    training_args.save_strategy = "no"
     tokenizer_name_or_path: str = (
         sft_training_args.tokenizer_name_or_path or sft_training_args.model_name_or_path
     )
