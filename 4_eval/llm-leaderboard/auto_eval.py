@@ -26,13 +26,14 @@ model_path_list = [
 done_list = []
 
 while True:
+
+    time.sleep(10)
     model_path_list = glob.glob("../../model/*/config.json")
     model_path_list = [i.replace("/config.json", "") for i in model_path_list]
     print(model_path_list)
 
     for model_path in model_path_list:
         if model_path in done_list:
-            time.sleep(10)
             continue
         model_name = model_path.split("/")[-1]
         run_name = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')+model_name
