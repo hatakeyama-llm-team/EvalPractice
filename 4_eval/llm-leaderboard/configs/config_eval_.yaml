@@ -12,11 +12,7 @@ github_version: v2.0.0
 log_dir: ./logs
 max_seq_length: 1024
 metainfo:
-<<<<<<< HEAD
-  basemodel_name: llm-jp-llm-jp-13b-v1-0_inst_jaster_15000_lr_1e-5
-=======
-  basemodel_name: llm-jp-llm-jp-13b-v1-0_inst_jaster_10000_lr_5e-5
->>>>>>> 240329snap
+  basemodel_name: llm-jp-llm-jp-13b-v1-0_inst_jaster_50000_lr_1e-5
   instruction_tuning_data:
   - None
   instruction_tuning_method: None
@@ -28,11 +24,7 @@ model:
   device_map: auto
   load_in_4bit: false
   load_in_8bit: false
-<<<<<<< HEAD
-  pretrained_model_name_or_path: ../../model/llm-jp-llm-jp-13b-v1-0_inst_jaster_15000_lr_1e-5
-=======
-  pretrained_model_name_or_path: ../../model/llm-jp-llm-jp-13b-v1-0_inst_jaster_10000_lr_5e-5
->>>>>>> 240329snap
+  pretrained_model_name_or_path: ../../model/llm-jp-llm-jp-13b-v1-0_inst_jaster_50000_lr_1e-5
   trust_remote_code: true
   use_wandb_artifacts: false
 mtbench:
@@ -70,11 +62,7 @@ target_dataset: all
 testmode: false
 tokenizer:
   artifacts_path: ''
-<<<<<<< HEAD
-  pretrained_model_name_or_path: ../../model/llm-jp-llm-jp-13b-v1-0_inst_jaster_15000_lr_1e-5
-=======
-  pretrained_model_name_or_path: ../../model/llm-jp-llm-jp-13b-v1-0_inst_jaster_10000_lr_5e-5
->>>>>>> 240329snap
+  pretrained_model_name_or_path: ../../model/llm-jp-llm-jp-13b-v1-0_inst_jaster_50000_lr_1e-5
   use_fast: true
   use_wandb_artifacts: false
 torch_dtype: bf16
@@ -82,8 +70,4 @@ wandb:
   entity: kanhatakeyamas
   log: true
   project: llmeval
-<<<<<<< HEAD
-  run_name: 20240330_033344llm-jp-llm-jp-13b-v1-0_inst_jaster_15000_lr_1e-5
-=======
-  run_name: 20240329_064152llm-jp-llm-jp-13b-v1-0_inst_jaster_10000_lr_5e-5
->>>>>>> 240329snap
+  run_name: 20240401_000111llm-jp-llm-jp-13b-v1-0_inst_jaster_50000_lr_1e-5
