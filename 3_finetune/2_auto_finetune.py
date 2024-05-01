@@ -10,8 +10,8 @@ model_name = "llm-jp/llm-jp-13b-v1.0"
 
 lr_list = [
     # "1e-6",
-    # "5e-6",
-    "1e-5",
+    "5e-6",
+    # "1e-5",
     # "5e-5",
 ]
 for inst_path in inst_path_list:
