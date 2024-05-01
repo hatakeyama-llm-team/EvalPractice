@@ -112,7 +112,7 @@ def main() -> None:
     # training_args.save_strategy = "epoch"
     training_args.save_strategy = "no"
 
-    training_args.gradient_accumulation_steps = 3
+    training_args.gradient_accumulation_steps = 64
 
     tokenizer_name_or_path: str = (
         sft_training_args.tokenizer_name_or_path or sft_training_args.model_name_or_path
