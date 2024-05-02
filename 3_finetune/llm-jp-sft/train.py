@@ -109,8 +109,8 @@ def main() -> None:
     training_args, sft_training_args = parser.parse_args_into_dataclasses()
 
     # training_args.save_steps = 100000
-    # training_args.save_strategy = "epoch"
-    training_args.save_strategy = "no"
+    training_args.save_strategy = "epoch"
+    # training_args.save_strategy = "no"
 
     training_args.gradient_accumulation_steps = 64
 
