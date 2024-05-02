@@ -19,8 +19,6 @@ disable_caching()
 
 logger = logging.getLogger(__name__)
 
-world_size = int(os.environ["WORLD_SIZE"])
-print("world size: ",world_size)
 @dataclass
 class SFTTrainingArguments:
     model_name_or_path: str
@@ -200,5 +198,7 @@ if __name__ == "__main__":
     )
     #main()
     #world_size = torch.cuda.device_count()
+    world_size = int(os.environ["WORLD_SIZE"])
+    print("world size: ",world_size)
 
     torch.multiprocessing.spawn(main, args=(), nprocs=world_size, join=True)
