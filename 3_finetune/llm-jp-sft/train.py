@@ -45,34 +45,9 @@ class SFTTrainingArguments:
             raise ValueError(
                 "load_in_8bit and load_in_4bit are mutually exclusive")
         if self.peft_target_model and self.peft_target_modules is None:
-            if self.peft_target_model == "llm-jp":
-                self.peft_target_modules = ["c_attn", "c_proj", "c_fc"]
-            elif self.peft_target_model == "llama":
-                # https://github.com/serp-ai/LLaMA-8bit-LoRA/blob/main/finetune_peft_8bit.py
-                self.peft_target_modules = [
-                    "q_proj",
-                    "k_proj",
-                    "v_proj",
-                    "o_proj",
-                ]
-            elif self.peft_target_model == "llama-all":
-                # https://note.com/kan_hatakeyama/n/ncd09c52d26c7
-                self.peft_target_modules = [
-                    "q_proj",
-                    "k_proj",
-                    "v_proj",
-                    "o_proj",
-                    "gate_proj",
-                    "up_proj",
-                    "down_proj",
-                    "lm_head",
-                    "embed_tokens",
-                ]
-            else:
-                logger.warning(
-                    f"peft_target_model '{self.peft_target_model}' is not supported, "
-                    f"so peft_target_modules is set to None."
-                )
+            logger.warning(
+                f"you should se the peft_target_modules when using peft_target_model"
+            )
 
     def from_pretrained_kwargs(self, training_args):
         if self.load_in_8bit:
@@ -108,16 +83,19 @@ def main() -> None:
     parser = HfArgumentParser((TrainingArguments, SFTTrainingArguments))
     training_args, sft_training_args = parser.parse_args_into_dataclasses()
 
-    # training_args.save_steps = 100000
-    training_args.save_strategy = "epoch"
-    # training_args.save_strategy = "no"
 
-    training_args.gradient_accumulation_steps = 64
+    # training_args.save_steps = 100000
+    #training_args.save_strategy = "epoch"
+    #training_args.logging_steps=10
+    # training_args.save_strategy = "no"
+    #training_args.gradient_accumulation_steps = 64
 
     tokenizer_name_or_path: str = (
         sft_training_args.tokenizer_name_or_path or sft_training_args.model_name_or_path
     )
     logger.info(f"Loading tokenizer from {tokenizer_name_or_path}")
+    logger.info(training_args)
+    logger.info(sft_training_args)
     tokenizer = AutoTokenizer.from_pretrained(
         tokenizer_name_or_path,
         use_fast=sft_training_args.use_fast,
