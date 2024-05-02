@@ -80,17 +80,20 @@ def load_datasets(data_files):
     return concatenate_datasets(datasets)
 
 
-def main(rank) -> None:
+def main() -> None:
     rank = int(os.environ["LOCAL_RANK"])
     torch.manual_seed(42)
     torch.cuda.manual_seed(42)
     torch.cuda.set_device(rank)
-    torch.distributed.init_process_group(backend='nccl', rank=rank, world_size=world_size)
+    torch.distributed.init_process_group(backend='nccl')
+    world_size = torch.distributed.get_world_size()
     print("current rank: ", rank)
+    print("world size: ", world_size)
 
     parser = HfArgumentParser((TrainingArguments, SFTTrainingArguments))
     training_args, sft_training_args = parser.parse_args_into_dataclasses()
     training_args.local_rank = rank
+    sft_training_args.local_rank = rank
     #training_args, sft_training_args = parser.parse_args_into_dataclasses(local_rank=rank)
     #training_args.local_rank = rank
     #sft_training_args.local_rank = rank
@@ -144,10 +147,10 @@ def main(rank) -> None:
     model = AutoModelForCausalLM.from_pretrained(
         sft_training_args.model_name_or_path,
         trust_remote_code=True,
-        device_map="auto",
+        #device_map="auto",
         **kwargs,
-    )
-
+        )
+    model = model.to(rank)
     peft_config: Optional[LoraConfig] = None
     if sft_training_args.use_peft:
         logger.info("Setting up LoRA")
@@ -180,8 +183,8 @@ def main(rank) -> None:
         peft_config=peft_config,
         max_seq_length=sft_training_args.max_seq_length,
         neftune_noise_alpha=5,  # NEFTune https://qiita.com/m__k/items/23ced0db6846e97d41cd
-        accelerator="gpu",
-        devices=world_size,
+        #accelerator="gpu",
+        #devices=world_size,
     )
 
     logger.info("Training")
@@ -196,9 +199,9 @@ if __name__ == "__main__":
         level=logging.DEBUG,
         format="%(asctime)s %(name)s:%(lineno)d: %(levelname)s: %(message)s",
     )
-    #main()
+    main()
     #world_size = torch.cuda.device_count()
-    world_size = int(os.environ["WORLD_SIZE"])
-    print("world size: ",world_size)
+    #world_size = int(os.environ["WORLD_SIZE"])
+    #print("world size: ",world_size)
 
-    torch.multiprocessing.spawn(main, args=(), nprocs=world_size, join=True)
+    #torch.multiprocessing.spawn(main, args=(), nprocs=world_size, join=True)

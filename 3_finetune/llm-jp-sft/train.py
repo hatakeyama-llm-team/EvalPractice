@@ -134,10 +134,15 @@ def main() -> None:
     logger.debug(
         f"AutoModelForCausalLM.from_pretrained({sft_training_args.model_name_or_path}, trust_remote_code=True, **kwargs={kwargs})"
     )
+    import os
+    #local_rank = os.getenv("LOCAL_RANK")
+    #device_string = "cuda:" + str(local_rank)
     model = AutoModelForCausalLM.from_pretrained(
         sft_training_args.model_name_or_path,
         trust_remote_code=True,
         device_map="auto",
+    #device_map={'':device_string},
+
         **kwargs,
     )
 
