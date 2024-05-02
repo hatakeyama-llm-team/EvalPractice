@@ -42,8 +42,9 @@ for inst_path in inst_path_list:
             --response_template "### 応答:\n" \
             --gradient_checkpointing true \
         """
-        cmd = f"""python -m torch.distributed.launch \
-            --nproc_per_node 8 llm-jp-sft/train.py \
+    #        --use_peft true
+    # --gradient_checkpointing true \
+        cmd = f"""torchrun --nproc_per_node=8 llm-jp-sft/train_multi.py \
             --num_train_epochs 3 \
             --per_device_train_batch_size 16 \
             --per_device_eval_batch_size 3 \
@@ -62,6 +63,7 @@ for inst_path in inst_path_list:
             --response_template "### 応答:\n" \
             --gradient_checkpointing true \
         """
-    #        --use_peft true
-    # --gradient_checkpointing true \
         os.system(cmd)
+
+
+    #使わない
