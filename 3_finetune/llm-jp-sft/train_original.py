@@ -23,18 +23,16 @@ logger = logging.getLogger(__name__)
 class SFTTrainingArguments:
     model_name_or_path: str
     data_files: list[str]
-    response_template: str
-    eval_data_files: Optional[list[str]] = None
-    instruction_template: Optional[str] = None
+    eval_data_files: list[str] = None
     tokenizer_name_or_path: Optional[str] = None
     use_fast: bool = True
-    additional_special_tokens: Optional[list[str]] = None
+    additional_special_tokens: list[str] = None
     max_seq_length: int = 2048
     load_in_8bit: bool = False
     load_in_4bit: bool = False
     use_flash_attention_2: bool = False
     use_peft: bool = False
-    peft_target_model: Optional[str] = "llama-all"
+    peft_target_model: Optional[str] = "llm-jp"
     peft_target_modules: Optional[list[str]] = None
     peft_lora_r: int = 8
     peft_lora_alpha: int = 32
@@ -42,12 +40,39 @@ class SFTTrainingArguments:
 
     def __post_init__(self):
         if self.load_in_8bit and self.load_in_4bit:
-            raise ValueError(
-                "load_in_8bit and load_in_4bit are mutually exclusive")
+            raise ValueError("load_in_8bit and load_in_4bit are mutually exclusive")
         if self.peft_target_model and self.peft_target_modules is None:
-            logger.warning(
-                f"you should se the peft_target_modules when using peft_target_model"
-            )
+            if self.peft_target_model == "llm-jp":
+                self.peft_target_modules = ["c_attn", "c_proj", "c_fc"]
+            elif self.peft_target_model == "llama":
+                # https://github.com/serp-ai/LLaMA-8bit-LoRA/blob/main/finetune_peft_8bit.py
+                self.peft_target_modules = [
+                    "q_proj",
+                    "k_proj",
+                    "v_proj",
+                    "o_proj",
+                    "gate_proj",
+                    "up_proj",
+                    "down_proj",
+                ]
+            elif self.peft_target_model == "llama-all":
+                # https://note.com/kan_hatakeyama/n/ncd09c52d26c7
+                self.peft_target_modules = [
+                    "q_proj",
+                    "k_proj",
+                    "v_proj",
+                    "o_proj",
+                    "gate_proj",
+                    "up_proj",
+                    "down_proj",
+                    "lm_head",
+                    "embed_tokens",
+                ]
+            else:
+                logger.warning(
+                    f"peft_target_model '{self.peft_target_model}' is not supported, "
+                    f"so peft_target_modules is set to None."
+                )
 
     def from_pretrained_kwargs(self, training_args):
         if self.load_in_8bit:
@@ -83,19 +108,10 @@ def main() -> None:
     parser = HfArgumentParser((TrainingArguments, SFTTrainingArguments))
     training_args, sft_training_args = parser.parse_args_into_dataclasses()
 
-
-    # training_args.save_steps = 100000
-    #training_args.save_strategy = "epoch"
-    #training_args.logging_steps=10
-    # training_args.save_strategy = "no"
-    #training_args.gradient_accumulation_steps = 64
-
     tokenizer_name_or_path: str = (
         sft_training_args.tokenizer_name_or_path or sft_training_args.model_name_or_path
     )
     logger.info(f"Loading tokenizer from {tokenizer_name_or_path}")
-    logger.info(training_args)
-    logger.info(sft_training_args)
     tokenizer = AutoTokenizer.from_pretrained(
         tokenizer_name_or_path,
         use_fast=sft_training_args.use_fast,
@@ -103,46 +119,32 @@ def main() -> None:
         trust_remote_code=True,
     )
 
-    tokenizer.add_special_tokens({'pad_token': '[PAD]'})
     logger.info("Loading data")
 
     train_dataset = load_datasets(sft_training_args.data_files)
     if sft_training_args.eval_data_files:
-        print("do eval")
         eval_dataset = load_datasets(sft_training_args.eval_data_files)
         training_args.do_eval = True
-        training_args.evaluation_strategy = "epoch"
     else:
         eval_dataset = None
 
     logger.info("Formatting prompts")
-    response_ids = tokenizer.encode(
-        sft_training_args.response_template, add_special_tokens=False)[1:]
-    if sft_training_args.instruction_template:
-        instruction_ids = tokenizer.encode(
-            sft_training_args.instruction_template, add_special_tokens=False)[1:]
-        collator = DataCollatorForCompletionOnlyLM(
-            instruction_template=instruction_ids, response_template=response_ids, tokenizer=tokenizer
-        )
-    else:
-        collator = DataCollatorForCompletionOnlyLM(
-            response_template=response_ids, tokenizer=tokenizer
-        )
+    instruction_ids = tokenizer.encode("\n\n### 指示:\n", add_special_tokens=False)[1:]
+    response_ids = tokenizer.encode("\n\n### 応答:\n", add_special_tokens=False)[1:]
+    collator = DataCollatorForCompletionOnlyLM(
+        instruction_template=instruction_ids,
+        response_template=response_ids,
+        tokenizer=tokenizer,
+    )
 
     logger.info(f"Loading model from {sft_training_args.model_name_or_path}")
     kwargs = sft_training_args.from_pretrained_kwargs(training_args)
     logger.debug(
         f"AutoModelForCausalLM.from_pretrained({sft_training_args.model_name_or_path}, trust_remote_code=True, **kwargs={kwargs})"
     )
-    import os
-    #local_rank = os.getenv("LOCAL_RANK")
-    #device_string = "cuda:" + str(local_rank)
     model = AutoModelForCausalLM.from_pretrained(
         sft_training_args.model_name_or_path,
         trust_remote_code=True,
-        #device_map="auto",
-    #device_map={'':device_string},
-
         **kwargs,
     )
 
@@ -177,7 +179,6 @@ def main() -> None:
         data_collator=collator,
         peft_config=peft_config,
         max_seq_length=sft_training_args.max_seq_length,
-        neftune_noise_alpha=5,  # NEFTune https://qiita.com/m__k/items/23ced0db6846e97d41cd
     )
 
     logger.info("Training")
