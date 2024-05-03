@@ -55,10 +55,10 @@ for inst_path in inst_path_list:
 
         cmd = f"""accelerate launch --config_file ./llm-jp-sft/configs/accelerate_config_zero1.yaml ./llm-jp-sft/train.py  \
             --num_train_epochs 1 \
-            --per_device_train_batch_size 1 \
+            --per_device_train_batch_size 2 \
             --per_device_eval_batch_size 3 \
             --save_strategy "epoch" \
-            --logging_steps 100 \
+            --logging_steps 1 \
             --gradient_accumulation_steps 32 \
             --learning_rate {lr} \
             --warmup_ratio 0.1 \
