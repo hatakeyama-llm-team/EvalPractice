@@ -189,7 +189,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     logging.basicConfig(
-        level=logging.DEBUG,
+        #level=logging.DEBUG,
         format="%(asctime)s %(name)s:%(lineno)d: %(levelname)s: %(message)s",
     )
     main()
