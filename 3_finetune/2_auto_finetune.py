@@ -6,7 +6,7 @@ import os
 inst_path_list = (glob.glob("data/*.jsonl"))
 print(inst_path_list)
 model_name = "llm-jp/llm-jp-13b-v1.0"
-model_name="../../llm/models/hf/0503llama/"
+model_name="../../llm/models/hf/2jaA"
 # model_name = "tokyotech-llm/Swallow-MS-7b-v0.1"
 
 lr_list = [
