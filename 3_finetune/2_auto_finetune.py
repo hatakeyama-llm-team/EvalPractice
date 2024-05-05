@@ -6,6 +6,7 @@ import os
 inst_path_list = (glob.glob("data/*.jsonl"))
 print(inst_path_list)
 model_name = "llm-jp/llm-jp-13b-v1.0"
+model_name="../../llm/models/hf/1code"
 model_name="../../llm/models/hf/2jaA"
 # model_name = "tokyotech-llm/Swallow-MS-7b-v0.1"
 
@@ -36,7 +37,7 @@ for inst_path in inst_path_list:
             --per_device_eval_batch_size 3 \
             --save_strategy "epoch" \
             --logging_steps 100 \
-            --gradient_accumulation_steps 2 \
+            --gradient_accumulation_steps 8 \
             --learning_rate {lr} \
             --warmup_ratio 0.1 \
             --lr_scheduler_type cosine \
@@ -59,7 +60,7 @@ for inst_path in inst_path_list:
             --per_device_eval_batch_size 3 \
             --save_strategy "epoch" \
             --logging_steps 1 \
-            --gradient_accumulation_steps 32 \
+            --gradient_accumulation_steps 16 \
             --learning_rate {lr} \
             --warmup_ratio 0.1 \
             --lr_scheduler_type cosine \
