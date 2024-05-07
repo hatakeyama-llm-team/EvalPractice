@@ -16,10 +16,10 @@ lr_list = [
 
 model_name_list=[
     #"llm-jp/llm-jp-13b-v1.0",
-    "../X_merge/merged_models/mergoo_llama_test",
+    #"../X_merge/merged_models/mergoo_llama_test",
     #"../../llm/models/hf/2ja1_part",
     #"../../llm/models/hf/1code",
-    #"../X_merge/merged_models/0507test",
+    "../X_merge/merged_models/0507test",
 ]
 
 for model_name in model_name_list:
@@ -49,7 +49,7 @@ for model_name in model_name_list:
 
             cmd = f"""{pre_cmd}  \
                 --num_train_epochs 1 \
-                --per_device_train_batch_size 1 \
+                --per_device_train_batch_size 4 \
                 --per_device_eval_batch_size 3 \
                 --save_strategy "epoch" \
                 --logging_steps 1 \
@@ -68,9 +68,13 @@ for model_name in model_name_list:
                 --gradient_checkpointing true \
                 --peft_target_model mixtral \
                 --use_peft True \
-                --peft_lora_r 64 \
+                --peft_lora_r 4096 \
+                --peft_lora_alpha 4096 \
             """
 
             #--load_in_4bit True \
             os.system(cmd)
 
+"""
+
+"""

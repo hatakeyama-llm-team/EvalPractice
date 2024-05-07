@@ -147,6 +147,9 @@ def main() -> None:
     logger.debug(
         f"AutoModelForCausalLM.from_pretrained({sft_training_args.model_name_or_path}, trust_remote_code=True, **kwargs={kwargs})"
     )
+
+
+
     if sft_training_args.model_name_or_path.find("mergoo")>=0:
         from mergoo.models.modeling_llama import LlamaForCausalLM
         #aceclerateをつかったマルチgpuでの学習がうまくいかなかった
@@ -178,6 +181,10 @@ def main() -> None:
 
             **kwargs,
         )
+    #if True:
+    #    for name, weight in model.named_parameters():
+    #        if "gate" not in name and "weight" in name:
+    #            weight.requires_grad_(False)
 
     peft_config: Optional[LoraConfig] = None
     if sft_training_args.use_peft:
