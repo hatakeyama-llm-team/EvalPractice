@@ -16,9 +16,10 @@ lr_list = [
 
 model_name_list=[
     #"llm-jp/llm-jp-13b-v1.0",
-    #"/home/hatakeyama/python/EvalPractice/X_merge/merged_models/mergoo_llama_test",
-    "../../llm/models/hf/2ja1_part",
+    "../X_merge/merged_models/mergoo_llama_test",
+    #"../../llm/models/hf/2ja1_part",
     #"../../llm/models/hf/1code",
+    #"../X_merge/merged_models/0507test",
 ]
 
 for model_name in model_name_list:
@@ -65,6 +66,9 @@ for model_name in model_name_list:
                 --response_template "<SEP>応答<SEP>" \
                 --use_flash_attention_2 True \
                 --gradient_checkpointing true \
+                --peft_target_model mixtral \
+                --use_peft True \
+                --peft_lora_r 64 \
             """
 
             #--load_in_4bit True \

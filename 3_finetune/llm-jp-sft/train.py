@@ -48,6 +48,19 @@ class SFTTrainingArguments:
             logger.warning(
                 f"you should se the peft_target_modules when using peft_target_model"
             )
+        if self.peft_target_model == "mergoo":
+            logger.info("Setting LORA for Mergoo")
+            self.peft_target_modules = [
+                #"gate_proj",
+                "gate_proj.gate",
+            ]
+        if self.peft_target_model == "mixtral":
+            logger.info("Setting LORA for mixtral")
+            self.peft_target_modules = [
+                "gate",
+            ]
+
+
 
     def from_pretrained_kwargs(self, training_args):
         if self.load_in_8bit:
@@ -146,7 +159,7 @@ def main() -> None:
         )# 'gate' / router layers are untrained hence loaded warning would appeare for them
 
         # train only router (gating) layers
-        if True:
+        if False:
             n_weights, n_router_weights  = 0,0
             for name, weight in model.named_parameters():
                 if "gate" not in name:

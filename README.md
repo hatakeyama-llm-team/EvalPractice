@@ -127,4 +127,5 @@ cd llm-jp-sft
 pip install -r requirements.in 
 pip install mergoo #MoE用
 pip install flash-attn --no-build-isolation #flash atten
+pip install --upgrade accelerate #accelerateを最新版に
 ~~~

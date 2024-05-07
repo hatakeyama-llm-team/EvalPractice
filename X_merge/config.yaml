@@ -1,0 +1,17 @@
+base_model: ../model/------llm-models-hf-2ja1_part_inst_all_lr_1e-5
+gate_mode: hidden
+experts:
+  - source_model: ../model/------llm-models-hf-2ja1_part_inst_all_lr_1e-5
+    positive_prompts:
+    - "chat"
+    - "assistant"
+    - "tell me"
+    - "explain"
+    - "I want"
+  - source_model: ../model/------llm-models-hf-1code_inst_gousei_lr_5e-6
+    positive_prompts:
+    - "code"
+    - "python"
+    - "javascript"
+    - "programming"
+    - "algorithm"
