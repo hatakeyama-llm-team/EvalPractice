@@ -1,7 +1,9 @@
 import logging
 from dataclasses import dataclass
 from typing import Optional
+
 import torch
+from peft import LoraConfig
 from datasets import disable_caching, load_dataset, concatenate_datasets
 from transformers import (
     AutoTokenizer,
@@ -10,8 +12,6 @@ from transformers import (
     HfArgumentParser,
     BitsAndBytesConfig,
 )
-
-from mergoo.models.modeling_llama import LlamaForCausalLM
 from trl import DataCollatorForCompletionOnlyLM, SFTTrainer
 
 disable_caching()
@@ -69,9 +69,6 @@ class SFTTrainingArguments:
         return kwargs
 
 
-
-
-
 def load_datasets(data_files):
     datasets = []
     for data_file in data_files:
@@ -86,6 +83,12 @@ def main() -> None:
     parser = HfArgumentParser((TrainingArguments, SFTTrainingArguments))
     training_args, sft_training_args = parser.parse_args_into_dataclasses()
 
+
+    # training_args.save_steps = 100000
+    #training_args.save_strategy = "epoch"
+    #training_args.logging_steps=10
+    # training_args.save_strategy = "no"
+    #training_args.gradient_accumulation_steps = 64
 
     tokenizer_name_or_path: str = (
         sft_training_args.tokenizer_name_or_path or sft_training_args.model_name_or_path
@@ -132,8 +135,10 @@ def main() -> None:
         f"AutoModelForCausalLM.from_pretrained({sft_training_args.model_name_or_path}, trust_remote_code=True, **kwargs={kwargs})"
     )
     if sft_training_args.model_name_or_path.find("mergoo")>=0:
+        from mergoo.models.modeling_llama import LlamaForCausalLM
         #aceclerateをつかったマルチgpuでの学習がうまくいかなかった
         print("init mergoo model")
+
         model = LlamaForCausalLM.from_pretrained(
             sft_training_args.model_name_or_path, 
             device_map="auto",  #accelerateの場合はoffにする
@@ -156,17 +161,29 @@ def main() -> None:
             trust_remote_code=True,
             #device_map="auto",
         #device_map={'':device_string},
+
             **kwargs,
         )
 
-
-    if training_args.gradient_checkpointing:
-        for param in model.parameters():
-            param.requires_grad = False
-            if param.ndim == 1:
-                param.data = param.data.to(torch.float32)
-        model.gradient_checkpointing_enable()
-        model.enable_input_require_grads()
+    peft_config: Optional[LoraConfig] = None
+    if sft_training_args.use_peft:
+        logger.info("Setting up LoRA")
+        peft_config = LoraConfig(
+            r=sft_training_args.peft_lora_r,
+            target_modules=sft_training_args.peft_target_modules,
+            lora_alpha=sft_training_args.peft_lora_alpha,
+            lora_dropout=sft_training_args.peft_lora_dropout,
+            fan_in_fan_out=True,
+            bias="none",
+            task_type="CAUSAL_LM",
+        )
+        if training_args.gradient_checkpointing:
+            for param in model.parameters():
+                param.requires_grad = False
+                if param.ndim == 1:
+                    param.data = param.data.to(torch.float32)
+            model.gradient_checkpointing_enable()
+            model.enable_input_require_grads()
 
     logger.info("Setting up trainer")
     trainer = SFTTrainer(
@@ -177,7 +194,7 @@ def main() -> None:
         eval_dataset=eval_dataset,
         dataset_text_field="text",
         data_collator=collator,
-        #peft_config=peft_config,
+        peft_config=peft_config,
         max_seq_length=sft_training_args.max_seq_length,
         neftune_noise_alpha=5,  # NEFTune https://qiita.com/m__k/items/23ced0db6846e97d41cd
     )

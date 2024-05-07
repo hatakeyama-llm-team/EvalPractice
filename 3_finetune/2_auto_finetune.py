@@ -5,11 +5,7 @@ import os
 
 inst_path_list = (glob.glob("data/*.jsonl"))
 print(inst_path_list)
-model_name = "llm-jp/llm-jp-13b-v1.0"
-model_name="../../llm/models/hf/1code"
-model_name="../../llm/models/hf/2jaA"
-model_name="../X_merge/merged_models/mergoo_llama_test"
-# model_name = "tokyotech-llm/Swallow-MS-7b-v0.1"
+
 
 lr_list = [
     # "1e-6",
@@ -19,6 +15,7 @@ lr_list = [
 ]
 
 model_name_list=[
+    #"llm-jp/llm-jp-13b-v1.0",
 "../../llm/models/hf/1code",
 "../../llm/models/hf/2ja1_part",
 ]

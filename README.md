@@ -118,14 +118,13 @@ python scripts/run_eval_modif.py
 
 
 # TODO
-- instruct集
-- 数学系
-  - https://huggingface.co/datasets/kunishou/OpenMathInstruct-1-1.8m-ja
-- プログラミング
-  - https://huggingface.co/datasets/kunishou/amenokaku-code-instruct?
-- 一般
-  - https://huggingface.co/datasets/kunishou/HelpSteer-35k-ja?row=16
-  - https://huggingface.co/datasets/sudy-super/CoTangent
 
-- 酒
-  - https://huggingface.co/datasets/yuiseki/sake_qa
+# ftの構築メモ 0507
+~~~
+conda create -n llmeval2 python=3.11 -y
+#llm-jp-sftのレポジトリに移動
+cd llm-jp-sft
+pip install -r requirements.in 
+pip install mergoo #MoE用
+pip install flash-attn --no-build-isolation #flash atten
+~~~
