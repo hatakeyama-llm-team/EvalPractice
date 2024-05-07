@@ -16,8 +16,9 @@ lr_list = [
 
 model_name_list=[
     #"llm-jp/llm-jp-13b-v1.0",
-"../../llm/models/hf/1code",
-"../../llm/models/hf/2ja1_part",
+    #"/home/hatakeyama/python/EvalPractice/X_merge/merged_models/mergoo_llama_test",
+    "../../llm/models/hf/2ja1_part",
+    #"../../llm/models/hf/1code",
 ]
 
 for model_name in model_name_list:
@@ -47,7 +48,7 @@ for model_name in model_name_list:
 
             cmd = f"""{pre_cmd}  \
                 --num_train_epochs 1 \
-                --per_device_train_batch_size 2 \
+                --per_device_train_batch_size 1 \
                 --per_device_eval_batch_size 3 \
                 --save_strategy "epoch" \
                 --logging_steps 1 \
@@ -65,5 +66,7 @@ for model_name in model_name_list:
                 --use_flash_attention_2 True \
                 --gradient_checkpointing true \
             """
+
+            #--load_in_4bit True \
             os.system(cmd)
 

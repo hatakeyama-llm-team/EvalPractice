@@ -141,20 +141,21 @@ def main() -> None:
 
         model = LlamaForCausalLM.from_pretrained(
             sft_training_args.model_name_or_path, 
-            device_map="auto",  #accelerateの場合はoffにする
-            #**kwargs,
+            #device_map="auto",  #accelerateの場合はoffにする
+            **kwargs,
         )# 'gate' / router layers are untrained hence loaded warning would appeare for them
 
         # train only router (gating) layers
-        n_weights, n_router_weights  = 0,0
-        for name, weight in model.named_parameters():
-            if "gate" not in name:
-                weight.requires_grad_(False)
-                n_router_weights += 1
-            n_weights += 1
-        print("train params:")
-        print(n_weights)
-        print(n_router_weights)
+        if True:
+            n_weights, n_router_weights  = 0,0
+            for name, weight in model.named_parameters():
+                if "gate" not in name:
+                    weight.requires_grad_(False)
+                    n_router_weights += 1
+                n_weights += 1
+            print("train params:")
+            print(n_weights)
+            print(n_router_weights)
     else:
         model = AutoModelForCausalLM.from_pretrained(
             sft_training_args.model_name_or_path,
