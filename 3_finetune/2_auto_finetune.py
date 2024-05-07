@@ -59,7 +59,6 @@ for model_name in model_name_list:
                 --lr_scheduler_type cosine \
                 --bf16 \
                 --data_files {inst_path} \
-                --eval_data_files {eval_path} \
                 --model_name_or_path {model_name} \
                 --output_dir {out_path} \
                 --instruction_template "<SEP>指示<SEP>" \
@@ -77,4 +76,5 @@ for model_name in model_name_list:
 
 """
 
+                --eval_data_files {eval_path} \
 """
