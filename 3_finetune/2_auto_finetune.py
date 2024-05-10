@@ -18,6 +18,7 @@ model_name_list=[
     #"llm-jp/llm-jp-13b-v1.0",
     #"../X_merge/merged_models/mergoo_llama_test",
     "../../llm/models/hf/2ja1_part",
+    "../../llm/models/hf/step41300",
     #"../../llm/models/hf/1code",
     #"../X_merge/merged_models/0507test",
 ]
