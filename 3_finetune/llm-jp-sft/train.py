@@ -83,9 +83,22 @@ class SFTTrainingArguments:
 
 
 def load_datasets(data_files):
+    import json
+    from datasets import Dataset
+
     datasets = []
+    
     for data_file in data_files:
-        dataset = load_dataset("json", data_files=data_file)
+        """
+        train_list=[]
+        with open(data_file,"r") as f:
+            for line in f:
+                train_list.append(json.loads(line))
+        data = {key: [dic[key] for dic in train_list] for key in train_list[0]}
+        dataset=Dataset.from_dict(data)
+        """
+        #dataset = load_dataset("json", data_files=data_file)
+        dataset = load_dataset("parquet", data_files=data_file)
         dataset = dataset["train"]
         dataset = dataset.select_columns("text")
         datasets.append(dataset)
@@ -119,6 +132,7 @@ def main() -> None:
     tokenizer.add_special_tokens({'pad_token': '[PAD]'})
     logger.info("Loading data")
 
+
     train_dataset = load_datasets(sft_training_args.data_files)
     if sft_training_args.eval_data_files:
         print("do eval")
@@ -129,19 +143,20 @@ def main() -> None:
         eval_dataset = None
 
     logger.info("Formatting prompts")
+    #自動でtokenを設定すると､うまくいかないことがある
     response_ids = tokenizer.encode(
         sft_training_args.response_template, add_special_tokens=False)[1:]
-    if sft_training_args.instruction_template:
-        instruction_ids = tokenizer.encode(
-            sft_training_args.instruction_template, add_special_tokens=False)[1:]
-        collator = DataCollatorForCompletionOnlyLM(
-            instruction_template=instruction_ids, response_template=response_ids, tokenizer=tokenizer
-        )
-    else:
-        collator = DataCollatorForCompletionOnlyLM(
-            response_template=response_ids, tokenizer=tokenizer
-        )
+    instruction_ids = tokenizer.encode(
+        sft_training_args.instruction_template, add_special_tokens=False)[1:]
 
+    #手動で設定する
+    logger.info("manually setting template ids")
+
+    response_ids=[5092, 272, 1045, 2850, 327]  # 指示､応答に対するtokenを手動で設定
+    instruction_ids=[5092, 272, 3994, 327]     #
+    collator = DataCollatorForCompletionOnlyLM(
+        instruction_template=instruction_ids, response_template=response_ids, tokenizer=tokenizer
+    )
     logger.info(f"Loading model from {sft_training_args.model_name_or_path}")
     kwargs = sft_training_args.from_pretrained_kwargs(training_args)
     logger.debug(

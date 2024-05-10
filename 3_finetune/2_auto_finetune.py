@@ -3,7 +3,7 @@ import os
 #os.environ["CUDA_VISIBLE_DEVICES"] = "0,1"
 #print(os.environ["CUDA_VISIBLE_DEVICES"])
 
-inst_path_list = (glob.glob("data/*.jsonl"))
+inst_path_list = (glob.glob("data/*.jsonl.parquet"))
 print(inst_path_list)
 
 
@@ -17,9 +17,9 @@ lr_list = [
 model_name_list=[
     #"llm-jp/llm-jp-13b-v1.0",
     #"../X_merge/merged_models/mergoo_llama_test",
-    #"../../llm/models/hf/2ja1_part",
+    "../../llm/models/hf/2ja1_part",
     #"../../llm/models/hf/1code",
-    "../X_merge/merged_models/0507test",
+    #"../X_merge/merged_models/0507test",
 ]
 
 for model_name in model_name_list:
@@ -61,20 +61,20 @@ for model_name in model_name_list:
                 --data_files {inst_path} \
                 --model_name_or_path {model_name} \
                 --output_dir {out_path} \
-                --instruction_template "<SEP>指示<SEP>" \
-                --response_template "<SEP>応答<SEP>" \
+                --instruction_template "dummy" \
+                --response_template "dummy" \
                 --use_flash_attention_2 True \
                 --gradient_checkpointing true \
-                --peft_target_model mixtral \
-                --use_peft True \
-                --peft_lora_r 4096 \
-                --peft_lora_alpha 4096 \
+
             """
 
             #--load_in_4bit True \
             os.system(cmd)
 
 """
-
+                --peft_target_model mixtral \
+                --use_peft True \
+                --peft_lora_r 4096 \
+                --peft_lora_alpha 4096 \
                 --eval_data_files {eval_path} \
 """
