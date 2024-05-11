@@ -128,6 +128,7 @@ def main() -> None:
     )
 
     tokenizer.add_special_tokens({'pad_token': '[PAD]'})
+    tokenizer.add_special_tokens({'additional_special_tokens': ['\n']})
     logger.info("Loading data")
 
 
@@ -150,8 +151,8 @@ def main() -> None:
     #手動で設定する
     logger.info("manually setting template ids")
 
-    response_ids=[5092, 272, 1045, 2850, 327]  # 指示､応答に対するtokenを手動で設定
-    instruction_ids=[5092, 272, 3994, 327]     #
+    #response_ids=[5092, 272, 1045, 2850, 327]  # 指示､応答に対するtokenを手動で設定
+    #instruction_ids=[5092, 272, 3994, 327]     #
     collator = DataCollatorForCompletionOnlyLM(
         instruction_template=instruction_ids, response_template=response_ids, tokenizer=tokenizer
     )

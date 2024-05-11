@@ -10,7 +10,8 @@ print(inst_path_list)
 lr_list = [
     # "1e-6",
     #"5e-6",
-     "1e-5",
+    # "1e-5",
+     "1e-4",
     # "5e-5",
 ]
 
@@ -18,7 +19,7 @@ model_name_list=[
     #"llm-jp/llm-jp-13b-v1.0",
     #"../X_merge/merged_models/mergoo_llama_test",
     #"../../llm/models/hf/2ja1_part",
-    "../../llm/models/hf/step",
+    "../../llm/models/hf/step41300",
     #"../../llm/models/hf/1code",
     #"../X_merge/merged_models/0507test",
 ]
@@ -62,8 +63,8 @@ for model_name in model_name_list:
                 --data_files {inst_path} \
                 --model_name_or_path {model_name} \
                 --output_dir {out_path} \
-                --instruction_template "dummy" \
-                --response_template "dummy" \
+                --instruction_template "\n\n### 指示:\n" \
+                --response_template "\n\n### 応答:\n" \
                 --use_flash_attention_2 True \
                 --gradient_checkpointing true \
 
