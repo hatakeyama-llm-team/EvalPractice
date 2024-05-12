@@ -128,7 +128,8 @@ def main() -> None:
     )
 
     tokenizer.add_special_tokens({'pad_token': '[PAD]'})
-    tokenizer.add_special_tokens({'additional_special_tokens': ['\n']})
+    #tokenizer.add_special_tokens({'additional_special_tokens': ['\n']})
+    #tokenizer.add_prefix_space=False
     logger.info("Loading data")
 
 

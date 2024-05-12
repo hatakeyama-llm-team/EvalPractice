@@ -10,7 +10,7 @@ print(inst_path_list)
 lr_list = [
     # "1e-6",
     #"5e-6",
-    # "1e-5",
+     "1e-5",
      "1e-4",
     # "5e-5",
 ]
@@ -62,6 +62,7 @@ for model_name in model_name_list:
                 --bf16 \
                 --data_files {inst_path} \
                 --model_name_or_path {model_name} \
+                --use_fast False \
                 --output_dir {out_path} \
                 --instruction_template "\n\n### 指示:\n" \
                 --response_template "\n\n### 応答:\n" \
