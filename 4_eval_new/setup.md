@@ -1,6 +1,8 @@
 ~~~
-git clone git@github.com:matsuolab/llm-leaderboard.git
+git clone https://github.com/matsuolab/llm-leaderboard
 conda create -n llmeval2
+conda install python==3.10 -y
+conda install pip -y
 pip3 install -r llm-leaderboard/requirements.txt
 
 export LANG=ja_JP.UTF-8

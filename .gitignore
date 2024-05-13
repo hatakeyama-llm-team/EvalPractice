@@ -134,8 +134,10 @@ data/*
 3_finetune/wandb
 3_finetune/data
 model/*
+FastChat
 nohup.out
 dev_cmd
 merged_models
 merge
 .DS_Store
+wandb

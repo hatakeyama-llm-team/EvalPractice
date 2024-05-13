@@ -65,7 +65,7 @@ for model_name in model_name_list:
                 --use_fast False \
                 --output_dir {out_path} \
                 --instruction_template "\n\n### 指示:\n" \
-                --response_template "\n\n### 応答:" \
+                --response_template "\n\n### 応答:\n" \
                 --use_flash_attention_2 True \
                 --gradient_checkpointing true \
 
