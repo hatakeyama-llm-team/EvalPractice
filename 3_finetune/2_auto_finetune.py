@@ -11,7 +11,7 @@ lr_list = [
     # "1e-6",
     #"5e-6",
      "1e-5",
-     "1e-4",
+     #"1e-4",
     # "5e-5",
 ]
 
@@ -65,7 +65,7 @@ for model_name in model_name_list:
                 --use_fast False \
                 --output_dir {out_path} \
                 --instruction_template "\n\n### 指示:\n" \
-                --response_template "\n\n### 応答:\n" \
+                --response_template "\n\n### 応答:" \
                 --use_flash_attention_2 True \
                 --gradient_checkpointing true \
 
@@ -73,7 +73,7 @@ for model_name in model_name_list:
 
             #--load_in_4bit True \
             os.system(cmd)
-
+# --response_template "\n\n### 応答:\n" \
 """
                 --peft_target_model mixtral \
                 --use_peft True \
