@@ -84,7 +84,9 @@ mtbench:
   parallel: 1
   first_n: null
   # for conv template # added
-  custom_conv_template: false
+  #custom_conv_template: false
+  custom_conv_template: true #変更!
+
   # the following variables will be used when custom_conv_template is set as true
   conv_name: "custom"
   conv_system_message: "以下は、タスクを説明する指示と、文脈のある入力の組み合わせです。要求を適切に満たす応答を書きなさい。"
