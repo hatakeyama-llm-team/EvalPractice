@@ -3,46 +3,35 @@
 
 # %%
 import os
-
-#dataフォルダ内をリセット
-os.system("mkdir data")
-os.system("rm -rf data/*")
-
-# %%
 from datasets import load_dataset
 import json
+import random
+from tqdm import tqdm
 
-# %%
+data_folder="data/0515data"
+
+#dataフォルダ内をリセット
+os.system(f"mkdir {data_folder}")
+os.system(f"rm -rf {data_folder}/*")
+
+
 ds_dict={}
 
-# %% [markdown]
-# # 自動生成したQAの読み込み
-
-# %%
 def clean_autogen(text):
     if text is None:
         return ""
     text=text.strip()
     return text
 
-# %%
-#original template
 question_template="以下は、タスクを説明する指示と、文脈のある入力の組み合わせです。要求を適切に満たす応答を書きなさい。\n\n### 指示:\n"
 answer_template="\n\n### 応答:\n"
-#answer_template="\n\n### 応答:" #変な改行が入るので､一旦､消してみる →改善せず｡逆に､出力に改行が2つ入る
-#custom template
-#question_template="以下は、タスクを説明する指示と、文脈のある入力の組み合わせです。要求を適切に満たす応答を書きなさい。<SEP>指示<SEP>"
-#answer_template="<SEP>応答<SEP>"
 
-
-#question_template="以下は、タスクを説明する指示と、文脈のある入力の組み合わせです。要求を適切に満たす応答を書きなさい。:### 指示::"
-#answer_template=":### 応答::"
 
 # %%
 #ベンチマークに用いるjmt benchと類似しすぎたデータは使わないようにする
 import pandas as pd
 #!pip install rapidfuzz
-from rapidfuzz.process import cdist
+#from rapidfuzz.process import cdist
 
 jmt_bench_df=pd.read_csv("reference_data/jmtbench.csv")
 bench_questions=jmt_bench_df["問い"].tolist()
@@ -53,15 +42,11 @@ def check_jmt_similarity(q,bench_questions):
     score=max(scores[0])
     return score
 
-# %%
 
 records=[]
 
-# %% [markdown]
 # # mixtralで自動生成したQ&A
 
-# %%
-from tqdm import tqdm
 score_threshold=4
 sim_threshold=80
 
@@ -158,31 +143,22 @@ for hachi_ds in hachi_datasets:
 # %% [markdown]
 # # Bumpo dataset
 
-# %%
 #文法理解に関するデータセット
 ds2=load_dataset("hatakeyama-llm-team/BumpoRikai",split="train")
-ds2
-
 # %%
 records=[]
 for original_record in iter(ds2):
     q=(original_record["question"])
     a=(original_record["answer"])
+    inst=(original_record["instruction"])
     if q=="" or a=="":
         continue
-    inst=(original_record["instruction"])
     text=f"{question_template}{q}{answer_template}{a}"
     records.append(text)
-print(text)
 ds_dict["bumpo_rikai"]=records
 records[1]
 
-# %% [markdown]
-# # minnade dataset
 
-# %%
-from datasets import load_dataset
-#todo: dataを入れる
 m_ds=load_dataset("minnade/chat-daily",split="train")
 
 id_to_content={}
@@ -196,8 +172,9 @@ for record in m_ds:
         a=record["body"]
         if a is None:
             continue
-        if q=="" or a=="":
+        if len(a)<4:
             continue
+        #questions.append((q,a))
         text=f"{question_template}{q}{answer_template}{a}"
         questions.append(text)
 
@@ -208,10 +185,7 @@ all_recrds=[]
 for k,v in ds_dict.items():
     all_recrds+=v
 
-len(all_recrds)
-
 # %%
-import random
 
 def write_jsonl(records,
     output_path="data/all.jsonl",
@@ -224,67 +198,15 @@ def write_jsonl(records,
     df["text"] =records[:-n_eval][:n_train]
     df["text"]=df["text"].astype(str)
     df=df.reset_index()
-    df.to_parquet(output_path+".parquet")
+    df.to_parquet(output_path)
     
-    #lines=[json.dumps({"text":text},ensure_ascii=False) for text in records]
-    #with open (output_path,"w", newline='\n') as f:
-    #    temp_lines=lines[:-n_eval][:n_train]
-    #    obj = map(lambda x: x + "\n", temp_lines)
-    #    f.writelines(obj)
-
-
+    #eval
     df=pd.DataFrame()
-    df["text"] =records[n_eval:]
+    df["text"] =records[-n_eval:]
     df["text"]=df["text"].astype(str)
     df=df.reset_index()
-    df.to_parquet(output_path+"eval.parquet")
- 
-    #lines=[json.dumps({"text":text},ensure_ascii=False) for text in records]
-    #lines=lines[-n_eval:]
-    #obj = map(lambda x: x + "\n", lines)
-    #with open (output_path+".eval","w", newline='\n') as f:
-    #    f.writelines(obj)
+    df.to_parquet(output_path.replace(".parquet","_eval.parquet"))
     return df
 n_train=10**10
 #n_train=5000
-df=write_jsonl(all_recrds,f"data/all_{n_train}_{n_train}.jsonl",n_train=n_train)
-
-# %% [markdown]
-# # コード関連の抜き出し
-
-# %%
-def count_half_width_ratio(text):
-    # 全文字数
-    total_chars = len(text)
-    # 半角文字数
-    half_width_chars = sum(1 for char in text if ord(char) < 128)
-    
-    # 半角文字の割合を計算
-    if total_chars == 0:
-        return 0  # 文字列が空の場合は0を返す
-    return half_width_chars / total_chars * 100
-code_keywords=[
-    "Python","python","code","コード","JSON","Java","XML","csv","CSV","def","list","html","HTML",
-    "プログラム","スクリプト","script","Script"
-]
-code_records=[]
-
-for record in all_recrds:
-    for keyword in code_keywords:
-        if record.find(keyword)>=0:
-            if count_half_width_ratio(record)>12:
-                code_records.append(record)
-                break
-
-len(code_records)
-
-
-# %%
-for i in range(20):
-    print(code_records[i].replace("\n","")[50:])
-
-# %% [markdown]
-# # openmath instruct ja
-# 
-
-
+df=write_jsonl(all_recrds,f"{data_folder}/all_{n_train}.parquet",n_train=n_train)

@@ -1,17 +1,15 @@
-base_model: ../model/------llm-models-hf-2ja1_part_inst_all_lr_1e-5
-gate_mode: hidden
+base_model: hatakeyama-llm-team/Tanuki_pretrained_stage6_step62160
+#gate_mode: cheap_embed
+gate_mode: hidden 
+dtype: bfloat16 
 experts:
-  - source_model: ../model/------llm-models-hf-2ja1_part_inst_all_lr_1e-5
+  - source_model: hatakeyama-llm-team/Tanuki_pretrained_stage6_step62160
     positive_prompts:
-    - "chat"
-    - "assistant"
-    - "tell me"
-    - "explain"
-    - "I want"
-  - source_model: ../model/------llm-models-hf-1code_inst_gousei_lr_5e-6
+      - 指示
+  - source_model: ../../llm/models/hf/3_step43400
     positive_prompts:
-    - "code"
-    - "python"
-    - "javascript"
-    - "programming"
-    - "algorithm"
+      - 指示
+  - source_model: ../../llm/models/hf/1_step30800
+    positive_prompts:
+      - Python
+      - コード
