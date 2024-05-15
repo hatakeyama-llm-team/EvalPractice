@@ -1,0 +1,58 @@
+pyファイル: 0515_ft.py
+データパス: data/0515data
+job名: 0515
+[2024-05-15 08:41:26,503] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2024-05-15 08:41:30,779] torch.distributed.run: [WARNING] 
+[2024-05-15 08:41:30,779] torch.distributed.run: [WARNING] *****************************************
+[2024-05-15 08:41:30,779] torch.distributed.run: [WARNING] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+[2024-05-15 08:41:30,779] torch.distributed.run: [WARNING] *****************************************
+[2024-05-15 08:41:40,640] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2024-05-15 08:41:40,640] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2024-05-15 08:41:40,640] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2024-05-15 08:41:40,640] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2024-05-15 08:41:40,640] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2024-05-15 08:41:40,640] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2024-05-15 08:41:40,640] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2024-05-15 08:41:40,640] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2024-05-15 08:41:41,454] [INFO] [comm.py:637:init_distributed] cdb=None
+[2024-05-15 08:41:41,462] [INFO] [comm.py:637:init_distributed] cdb=None
+[2024-05-15 08:41:41,463] [INFO] [comm.py:637:init_distributed] cdb=None
+[2024-05-15 08:41:41,463] [INFO] [comm.py:637:init_distributed] cdb=None
+[2024-05-15 08:41:41,471] [INFO] [comm.py:637:init_distributed] cdb=None
+[2024-05-15 08:41:41,477] [INFO] [comm.py:637:init_distributed] cdb=None
+[2024-05-15 08:41:41,486] [INFO] [comm.py:637:init_distributed] cdb=None
+[2024-05-15 08:41:41,501] [INFO] [comm.py:637:init_distributed] cdb=None
+[2024-05-15 08:41:41,501] [INFO] [comm.py:668:init_distributed] Initializing TorchBackend in DeepSpeed with backend nccl
+2024-05-15 08:41:41,953 __main__:48: WARNING: you should se the peft_target_modules when using peft_target_model
+2024-05-15 08:41:42,036 __main__:48: WARNING: you should se the peft_target_modules when using peft_target_model
+2024-05-15 08:41:42,036 __main__:48: WARNING: you should se the peft_target_modules when using peft_target_model
+2024-05-15 08:41:42,044 __main__:48: WARNING: you should se the peft_target_modules when using peft_target_model
+2024-05-15 08:41:42,045 __main__:48: WARNING: you should se the peft_target_modules when using peft_target_model
+2024-05-15 08:41:42,081 __main__:48: WARNING: you should se the peft_target_modules when using peft_target_model
+2024-05-15 08:41:42,082 __main__:48: WARNING: you should se the peft_target_modules when using peft_target_model
+2024-05-15 08:41:42,082 __main__:48: WARNING: you should se the peft_target_modules when using peft_target_model
+do eval
+do eval
+do eval
+do eval
+do eval
+do eval
+do eval
+do eval
+The model was loaded with use_flash_attention_2=True, which is deprecated and may be removed in a future release. Please use `attn_implementation="flash_attention_2"` instead.
+The model was loaded with use_flash_attention_2=True, which is deprecated and may be removed in a future release. Please use `attn_implementation="flash_attention_2"` instead.
+The model was loaded with use_flash_attention_2=True, which is deprecated and may be removed in a future release. Please use `attn_implementation="flash_attention_2"` instead.
+The model was loaded with use_flash_attention_2=True, which is deprecated and may be removed in a future release. Please use `attn_implementation="flash_attention_2"` instead.
+The model was loaded with use_flash_attention_2=True, which is deprecated and may be removed in a future release. Please use `attn_implementation="flash_attention_2"` instead.
+The model was loaded with use_flash_attention_2=True, which is deprecated and may be removed in a future release. Please use `attn_implementation="flash_attention_2"` instead.
+The model was loaded with use_flash_attention_2=True, which is deprecated and may be removed in a future release. Please use `attn_implementation="flash_attention_2"` instead.
+You are attempting to use Flash Attention 2.0 with a model not initialized on GPU. Make sure to move the model to GPU after initializing it on CPU with `model.to('cuda')`.
+You are attempting to use Flash Attention 2.0 with a model not initialized on GPU. Make sure to move the model to GPU after initializing it on CPU with `model.to('cuda')`.
+You are attempting to use Flash Attention 2.0 with a model not initialized on GPU. Make sure to move the model to GPU after initializing it on CPU with `model.to('cuda')`.
+You are attempting to use Flash Attention 2.0 with a model not initialized on GPU. Make sure to move the model to GPU after initializing it on CPU with `model.to('cuda')`.
+You are attempting to use Flash Attention 2.0 with a model not initialized on GPU. Make sure to move the model to GPU after initializing it on CPU with `model.to('cuda')`.
+You are attempting to use Flash Attention 2.0 with a model not initialized on GPU. Make sure to move the model to GPU after initializing it on CPU with `model.to('cuda')`.
+You are attempting to use Flash Attention 2.0 with a model not initialized on GPU. Make sure to move the model to GPU after initializing it on CPU with `model.to('cuda')`.
+The model was loaded with use_flash_attention_2=True, which is deprecated and may be removed in a future release. Please use `attn_implementation="flash_attention_2"` instead.
+You are attempting to use Flash Attention 2.0 with a model not initialized on GPU. Make sure to move the model to GPU after initializing it on CPU with `model.to('cuda')`.
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [01:38<04:55, 98.47s/it]Loading checkpoint shards:  25%|██▌       | 1/4 [01:39<04:57, 99.05s/it]Loading checkpoint shards:  25%|██▌       | 1/4 [01:39<04:57, 99.06s/it]Loading checkpoint shards:  25%|██▌       | 1/4 [01:39<04:57, 99.06s/it]Loading checkpoint shards:  25%|██▌       | 1/4 [01:39<04:57, 99.06s/it]Loading checkpoint shards:  25%|██▌       | 1/4 [01:39<04:57, 99.08s/it]Loading checkpoint shards:  25%|██▌       | 1/4 [01:39<04:57, 99.08s/it]Loading checkpoint shards:  25%|██▌       | 1/4 [01:39<04:57, 99.07s/it]Loading checkpoint shards:  50%|█████     | 2/4 [03:17<03:17, 98.56s/it]Loading checkpoint shards:  50%|█████     | 2/4 [03:17<03:17, 98.93s/it]Loading checkpoint shards:  50%|█████     | 2/4 [03:17<03:17, 98.94s/it]Loading checkpoint shards:  50%|█████     | 2/4 [03:17<03:17, 98.94s/it]Loading checkpoint shards:  50%|█████     | 2/4 [03:17<03:17, 98.93s/it]Loading checkpoint shards:  50%|█████     | 2/4 [03:17<03:18, 99.02s/it]Loading checkpoint shards:  50%|█████     | 2/4 [03:17<03:17, 98.94s/it]Loading checkpoint shards:  50%|█████     | 2/4 [03:17<03:17, 98.93s/it]

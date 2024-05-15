@@ -22,18 +22,18 @@ print(inst_path_list)
 lr_list = [
     # "1e-6",
     #"5e-6",
-     "1e-4",
-     "1e-5",
-    # "5e-5",
+     #"1e-4",
+     #"1e-5",
+     "5e-5",
 ]
 
 model_name_list=[
 "hatakeyama-llm-team/Tanuki_pretrained_stage6_step62160",
-"hatakeyama-llm-team/Tanuki_pretrained_stage5_step58800",
-"hatakeyama-llm-team/Tanuki_pretrained_stage4_step49700",
-"hatakeyama-llm-team/Tanuki_pretrained_stage3_step43400",
-"hatakeyama-llm-team/Tanuki_pretrained_stage2_step37800",
-"hatakeyama-llm-team/Tanuki_pretrained_stage1_step30800",
+#"hatakeyama-llm-team/Tanuki_pretrained_stage5_step58800",
+#"hatakeyama-llm-team/Tanuki_pretrained_stage4_step49700",
+#"hatakeyama-llm-team/Tanuki_pretrained_stage3_step43400",
+#"hatakeyama-llm-team/Tanuki_pretrained_stage2_step37800",
+#"hatakeyama-llm-team/Tanuki_pretrained_stage1_step30800",
 ]
 
 random.shuffle(model_name_list)
