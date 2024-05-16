@@ -71,7 +71,8 @@ mtbench:
   model_id: null # cannot use '<', '>', ':', '"', '/', '\\', '|', '?', '*', '.'
   question_begin: null
   question_end: null
-  max_new_token: 256
+  #max_new_token: 256
+  max_new_token: 512 #増やした｡
   num_choices: 1
   num_gpus_per_model: 1
   num_gpus_total: 1
