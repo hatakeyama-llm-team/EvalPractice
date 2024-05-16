@@ -139,6 +139,7 @@ nohup.out
 dev_cmd
 merged_models
 merge
+mergekit
 .DS_Store
 wandb
 devfile.txt

@@ -64,7 +64,7 @@ for model_name in model_name_list:
             #pre_cmd="python ./llm-jp-sft/train.py"
 
             cmd = f"""{pre_cmd}  \
-                --num_train_epochs 2 \
+                --num_train_epochs 3 \
                 --per_device_train_batch_size 4 \
                 --per_device_eval_batch_size 3 \
                 --save_strategy "epoch" \
@@ -76,7 +76,7 @@ for model_name in model_name_list:
                 --bf16 \
                 --data_files {inst_path} \
                 --model_name_or_path {model_name} \
-                --use_fast False \
+                --use_fast True \
                 --output_dir {out_path} \
                 --instruction_template "\n\n### 指示:\n" \
                 --response_template "\n\n### 応答:\n" \
