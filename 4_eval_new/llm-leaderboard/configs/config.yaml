@@ -1,8 +1,11 @@
 wandb:
   log: True
   entity: "weblab-geniac-leaderboard"
+  #entity: "kanhatakeyamas"
   project: "leaderboard"
+  #project: "test"
   run_name: 'weblab-geniac1/0516tanuki_lr5e5_epoch1' # ご自身のteam名(weblab-geniac{N}, Nは1~8)の後(/以降)、実験管理用にお好きな名前をつけてください
+  #run_name: '9519' # ご自身のteam名(weblab-geniac{N}, Nは1~8)の後(/以降)、実験管理用にお好きな名前をつけてください
 
 github_version: v2.0.0 #for recording
 
@@ -16,6 +19,7 @@ model:
   use_wandb_artifacts: false
   artifacts_path: ""
   pretrained_model_name_or_path: "kanhatakeyama/0516tanuki_lr5e5_epoch1" # huggingfaceのupload先を指定してください
+  #pretrained_model_name_or_path: "/
   trust_remote_code: true
   device_map: "auto"
   load_in_8bit: false
@@ -31,6 +35,7 @@ tokenizer:
   use_wandb_artifacts: false
   artifacts_path: ""
   pretrained_model_name_or_path: "hatakeyama-llm-team/tanuki_inst_0515test" # huggingfaceのupload先を指定してください
+  #pretrained_model_name_or_path: ""
   use_fast: true
 
 # for llm-jp-eval

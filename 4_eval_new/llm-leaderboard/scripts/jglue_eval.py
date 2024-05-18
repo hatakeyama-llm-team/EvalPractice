@@ -287,6 +287,7 @@ def evaluate():
 
             cfg.metainfo.data_type = "test"
             score_result, output_result = get_evaluation_result(
+                cfg=cfg,  # fix bug
                 run_name=run_name,
                 chain=overall_chain,
                 samples=target_data["samples"],
@@ -302,6 +303,7 @@ def evaluate():
             cfg_dev.metainfo.data_type = "dev"
 
             _, _ = get_evaluation_result(
+                cfg=cfg,  # fix bug
                 run_name=run_name,
                 chain=overall_chain,
                 samples=target_data["samples"],
