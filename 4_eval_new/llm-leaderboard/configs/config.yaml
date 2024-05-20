@@ -1,11 +1,11 @@
 wandb:
   log: True
-  entity: "weblab-geniac-leaderboard"
-  #entity: "kanhatakeyamas"
-  project: "leaderboard"
-  #project: "test"
-  run_name: 'weblab-geniac1/0516tanuki_lr5e5_epoch1' # ご自身のteam名(weblab-geniac{N}, Nは1~8)の後(/以降)、実験管理用にお好きな名前をつけてください
-  #run_name: '9519' # ご自身のteam名(weblab-geniac{N}, Nは1~8)の後(/以降)、実験管理用にお好きな名前をつけてください
+  #entity: "weblab-geniac-leaderboard"
+  entity: "kanhatakeyamas"
+  #project: "leaderboard"
+  project: "test"
+  #run_name: 'weblab-geniac1/0516tanuki_lr5e5_epoch1' # ご自身のteam名(weblab-geniac{N}, Nは1~8)の後(/以降)、実験管理用にお好きな名前をつけてください
+  run_name: 'test' # ご自身のteam名(weblab-geniac{N}, Nは1~8)の後(/以降)、実験管理用にお好きな名前をつけてください
 
 github_version: v2.0.0 #for recording
 
@@ -18,8 +18,8 @@ api: false
 model:
   use_wandb_artifacts: false
   artifacts_path: ""
-  pretrained_model_name_or_path: "kanhatakeyama/0516tanuki_lr5e5_epoch1" # huggingfaceのupload先を指定してください
-  #pretrained_model_name_or_path: "/
+  #pretrained_model_name_or_path: "kanhatakeyama/0516tanuki_lr5e5_epoch1" # huggingfaceのupload先を指定してください
+  pretrained_model_name_or_path: "/home/hatakeyama/python/EvalPractice/model/0517mult_hatakeyama-llm-team-Tanuki_pretrained_stage6_step62160_inst_0517mult-code_all_10000000000-parquet_lr_5e-5"
   trust_remote_code: true
   device_map: "auto"
   load_in_8bit: false
