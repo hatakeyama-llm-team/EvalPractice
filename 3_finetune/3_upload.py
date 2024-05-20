@@ -18,7 +18,9 @@ def parse_arguments():
 def load_tokenizer_and_model(input_tokenizer_and_model_dir: str):
     tokenizer = AutoTokenizer.from_pretrained(input_tokenizer_and_model_dir)
     model = AutoModelForCausalLM.from_pretrained(
-        input_tokenizer_and_model_dir, device_map="cpu")
+        input_tokenizer_and_model_dir, device_map="cpu",
+              torch_dtype=torch.bfloat16,
+        )
     return tokenizer, model
 
 
