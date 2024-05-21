@@ -96,7 +96,6 @@ for i in tqdm(range(int(len(records)/n_batch))):
 
     cnt += 1
 
-    break
 
 # %%
 len(prompts),len(sampled_records),len(outputs)
