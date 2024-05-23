@@ -58,7 +58,7 @@ for model_name in model_name_list:
             #pre_cmd="python ./llm-jp-sft/train.py"
 
             cmd = f"""{pre_cmd}  \
-                --num_train_epochs 1 \
+                --num_train_epochs 3 \
                 --per_device_train_batch_size 5 \
                 --per_device_eval_batch_size 3 \
                 --save_strategy "steps" \

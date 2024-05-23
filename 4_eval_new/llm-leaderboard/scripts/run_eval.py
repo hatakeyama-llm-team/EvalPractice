@@ -65,7 +65,7 @@ mtbench_evaluate()
 
 # 3. JGLUE
 from jglue_eval import evaluate as jglue_evaluate
-jglue_evaluate()
+#jglue_evaluate()
 # cleanup_gpu()
 
 # Logging results to W&B
