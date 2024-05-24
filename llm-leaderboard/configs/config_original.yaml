@@ -2,7 +2,7 @@ wandb:
   log: True
   entity: "weblab-geniac-leaderboard"
   project: "leaderboard"
-  run_name: 'weblab-geniac1/0524clean_halcination_little_codes_step1600' # ご自身のteam名(weblab-geniac{N}, Nは1~8)の後(/以降)、実験管理用にお好きな名前をつけてください
+  run_name: 'weblab-geniacN/gpt_0.125B_global_step35000_openassistant' # ご自身のteam名(weblab-geniac{N}, Nは1~8)の後(/以降)、実験管理用にお好きな名前をつけてください
 
 github_version: v2.0.0 #for recording
 
@@ -15,8 +15,7 @@ api: false
 model:
   use_wandb_artifacts: false
   artifacts_path: ""
-  #pretrained_model_name_or_path: "hotsuyuki/gpt_0.125B_global_step35000_openassistant" # huggingfaceのupload先を指定してください
-  pretrained_model_name_or_path: "hatakeyama-llm-team/0524clean_halcination_little_codes_step1600"
+  pretrained_model_name_or_path: "hotsuyuki/gpt_0.125B_global_step35000_openassistant" # huggingfaceのupload先を指定してください
   trust_remote_code: true
   device_map: "auto"
   load_in_8bit: false
@@ -33,8 +32,8 @@ generator:
 tokenizer:
   use_wandb_artifacts: false
   artifacts_path: ""
-  pretrained_model_name_or_path: "hatakeyama-llm-team/0524clean_halcination_little_codes_step1600"
-  use_fast: true
+  pretrained_model_name_or_path: "hotsuyuki/gpt_0.125B_global_step35000_openassistant" # huggingfaceのupload先を指定してください
+  use_fast: false
 
 # for llm-jp-eval
 max_seq_length: 2048
@@ -51,7 +50,7 @@ custom_fewshots_template: null
 # "\n### 入力：\n{input}\n### 回答：\n{output}"
 
 metainfo:
-  basemodel_name: "original model"
+  basemodel_name: "hotsuyuki/gpt_0.125B_global_step35000_openassistant"
   model_type: "open llm" # {open llm, commercial api}
   instruction_tuning_method: "None" # {"None", "Full", "LoRA", ...}
   instruction_tuning_data: ["None"] # {"None", "jaster", "dolly_ja", "oasst_ja", ...}
@@ -83,13 +82,10 @@ mtbench:
   custom_conv_template: true
   # the following variables will be used when custom_conv_template is set as true
   conv_name: "custom"
-  #conv_system_message: "<s>以下は、タスクを説明する指示と、文脈のある入力の組み合わせです。要求を適切に満たす応答を書きなさい。"
-  conv_system_message: "以下は、タスクを説明する指示と、文脈のある入力の組み合わせです。要求を適切に満たす応答を書きなさい。"
+  conv_system_message: "<s>以下は、タスクを説明する指示と、文脈のある入力の組み合わせです。要求を適切に満たす応答を書きなさい。"
   conv_roles: "('指示', '応答')"
   conv_sep: "\n\n### "
   conv_stop_token_ids: "[2]"
   conv_stop_str: "###"
-  #conv_role_message_separator: ": \n"
-  #conv_role_only_separator: ": \n"
-  conv_role_message_separator: ":\n"
-  conv_role_only_separator: ":\n"
+  conv_role_message_separator: ": \n"
+  conv_role_only_separator: ": \n"

@@ -2,7 +2,7 @@ wandb:
   log: True
   entity: "weblab-geniac-leaderboard"
   project: "leaderboard"
-  run_name: 'weblab-geniac1/0524clean_halcination_little_codes_step1600' # ご自身のteam名(weblab-geniac{N}, Nは1~8)の後(/以降)、実験管理用にお好きな名前をつけてください
+  run_name: 'weblab-geniac1/test' # ご自身のteam名(weblab-geniac{N}, Nは1~8)の後(/以降)、実験管理用にお好きな名前をつけてください
 
 github_version: v2.0.0 #for recording
 
@@ -16,7 +16,7 @@ model:
   use_wandb_artifacts: false
   artifacts_path: ""
   #pretrained_model_name_or_path: "hotsuyuki/gpt_0.125B_global_step35000_openassistant" # huggingfaceのupload先を指定してください
-  pretrained_model_name_or_path: "hatakeyama-llm-team/0524clean_halcination_little_codes_step1600"
+  pretrained_model_name_or_path: "kanhatakeyama/0516tanuki_lr5e5_epoch1"
   trust_remote_code: true
   device_map: "auto"
   load_in_8bit: false
@@ -33,7 +33,7 @@ generator:
 tokenizer:
   use_wandb_artifacts: false
   artifacts_path: ""
-  pretrained_model_name_or_path: "hatakeyama-llm-team/0524clean_halcination_little_codes_step1600"
+  pretrained_model_name_or_path: "kanhatakeyama/0516tanuki_lr5e5_epoch1"
   use_fast: true
 
 # for llm-jp-eval
