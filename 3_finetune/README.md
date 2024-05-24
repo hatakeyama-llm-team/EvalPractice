@@ -15,3 +15,22 @@ model.push_to_hub(huggingface_name)
 
 
 ~~~
+
+#batch ft
+cd EvalPractice/3_finetune/
+
+#job1
+sbatch --nodelist=slurm0-a3-ghpc-[12] --gpus-per-node=8 --time=30-00:00:00 -c 200 run.sh 0524ft_run.py data/0524clean_halcination_little_codes 1_0524clean_halcination_little_codes
+
+#job2
+sbatch --nodelist=slurm0-a3-ghpc-[13] --gpus-per-node=8 --time=30-00:00:00 -c 200 run.sh 0524ft_run.py data/0524with_halcination_little_codes 2_0524with_halcination_little_codes
+
+#job3
+sbatch --nodelist=slurm0-a3-ghpc-[12] --gpus-per-node=8 --time=30-00:00:00 -c 200 run.sh 0524ft_run.py data/0524with_halcination_little_codes_synth_eng 3_0524with_halcination_little_codes_synth_eng
+
+#job4 mathを盛りだくさん
+sbatch --nodelist=slurm0-a3-ghpc-[13] --gpus-per-node=8 --time=30-00:00:00 -c 200 run.sh 0524ft_run.py data/0524with_halcination_little_codes_synth_eng_math 4_0524with_halcination_little_codes_synth_eng_math
+
+#job5 clean & multiturnも300文字以上
+sbatch --nodelist=slurm0-a3-ghpc-[12] --gpus-per-node=8 --time=30-00:00:00 -c 200 run.sh 0524ft_run.py data/0524_5_dataset_clean_halcination_longer_multiturn 0524_5_dataset_clean_halcination_longer_multiturns
+

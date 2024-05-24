@@ -14,9 +14,11 @@ conda create -n llmeval python=3.11 -y
 conda activate llmeval
 #llm-jp-sftのレポジトリに移動
 cd llm-jp-sft
+export PATH=/home/ext_kan_hatakeyama_s_gmail_com/miniconda3/envs/llmeval/bin:$PATH
 pip install -r requirements.in 
 pip install flash-attn --no-build-isolation #flash atten
 pip install --upgrade accelerate #accelerateを最新版に
+pip install datasets
 
 #evalのリポジトリ
 cd 4_eval/llm-leaderboard
@@ -47,5 +49,13 @@ run_name: "test1"
 - コマンド例
 ~~~
 python 3_upload.py --output_tokenizer_and_model_dir ../model/llm-jp-llm-jp-13b-v1-0_inst_dolly10000 --huggingface_name llm-jp-llm-jp-13b-v1-0_inst_dolly10000
+
+~~~
+
+
+# 5/24メモ
+~~~
+#ディレクトリ移動
+cd /storage5/EvalPractice/3_finetune/
 
 ~~~
