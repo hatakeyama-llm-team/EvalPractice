@@ -96,7 +96,7 @@ def load_datasets(data_files):
         dataset=Dataset.from_dict(data)
         """
         #dataset = load_dataset("json", data_files=data_file)
-        dataset = load_dataset("parquet", data_files=data_file)
+        dataset = load_dataset("parquet", data_files=data_file,cache_dir="/storage5/hf")
         dataset = dataset["train"]
         dataset = dataset.select_columns("text")
         datasets.append(dataset)
@@ -133,9 +133,11 @@ def main() -> None:
     logger.info("Loading data")
 
 
+    #train_dataset = load_datasets(sft_training_args.data_files)
     train_dataset = load_datasets(sft_training_args.data_files)
     if sft_training_args.eval_data_files:
         print("do eval")
+        #eval_dataset = load_datasets(sft_training_args.eval_data_files)
         eval_dataset = load_datasets(sft_training_args.eval_data_files)
         training_args.do_eval = True
         training_args.evaluation_strategy = "steps"
@@ -238,7 +240,12 @@ def main() -> None:
     )
 
     logger.info("Training")
-    trainer.train()
+    if training_args.resume_from_checkpoint:
+        print("load checkpoint")
+        trainer.train(resume_from_checkpoint='/storage5/EvalPractice/model/2_0524with_halcination_little_codes_-storage5-llm-models-hf-step62160_fin_inst_0524with_halcination_little_codes-inst_parquet_lr_5e-5/checkpoint-7600')
+    else:
+        print("start from zero")
+        trainer.train()
 
     logger.info("Saving model")
     trainer.save_model()
