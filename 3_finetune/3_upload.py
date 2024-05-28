@@ -27,13 +27,20 @@ def load_tokenizer_and_model(input_tokenizer_and_model_dir: str):
 def main() -> None:
     args = parse_arguments()
 
+    org_name="hatakeyama-llm-team/"
+    args = parse_arguments()
+
+    print("loading model")
     # Loads and tests the local tokenizer and the local model.
     local_tokenizer, local_model = load_tokenizer_and_model(
         args.output_tokenizer_and_model_dir)
 
-    local_tokenizer.push_to_hub(args.huggingface_name)
-    local_model.push_to_hub(args.huggingface_name)
+    print("uploading tokenizer")
+    local_tokenizer.push_to_hub(org_name+args.huggingface_name)
+    print("uploading model")
+    local_model.push_to_hub(org_name+args.huggingface_name)
     return
+
 
 
 if __name__ == "__main__":

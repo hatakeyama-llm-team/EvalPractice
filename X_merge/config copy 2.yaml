@@ -1,0 +1,18 @@
+base_model: hatakeyama-llm-team/fin_inst_0524clean_halcination_little_codes_step3200
+#gate_mode: cheap_embed
+#gate_mode: hidden 
+gate_mode: random
+dtype: bfloat16 
+experts:
+  - source_model: hatakeyama-llm-team/fin_inst_0524clean_halcination_little_codes_step3200
+    positive_prompts:
+      - 指示
+  - source_model: hatakeyama-llm-team/0524with_halcination_little_codes_synth_eng_math_step1600
+    positive_prompts:
+      - Python
+      - 計算
+      - コード
+
+
+
+

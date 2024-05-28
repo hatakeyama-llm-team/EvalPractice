@@ -1,0 +1,14 @@
+
+base_model: hatakeyama-llm-team/fin_inst_0524clean_halcination_little_codes_step3200
+#gate_mode: cheap_embed
+#gate_mode: hidden 
+gate_mode: random
+dtype: bfloat16 
+experts:
+  - source_model: hatakeyama-llm-team/fin_inst_0524clean_halcination_little_codes_step3200
+    positive_prompts:
+      - 指示
+  - source_model: ../../llm/models/hf/3_step43400
+    positive_prompts:
+      - 指示
+      - コード
