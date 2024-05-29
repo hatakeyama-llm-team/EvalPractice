@@ -59,10 +59,10 @@ for model_name in model_name_list:
 
             cmd = f"""{pre_cmd}  \
                 --num_train_epochs 5 \
-                --per_device_train_batch_size 5 \
+                --per_device_train_batch_size 6 \
                 --per_device_eval_batch_size 3 \
                 --save_strategy "steps" \
-                --save_steps 1000 \
+                --save_steps 3000 \
                 --logging_steps 1 \
                 --gradient_accumulation_steps 16 \
                 --learning_rate {lr} \
@@ -77,7 +77,7 @@ for model_name in model_name_list:
                 --response_template "\n\n### 応答:\n" \
                 --use_flash_attention_2 True \
                 --gradient_checkpointing true \
-                --max_seq_length 4096 \
+                --max_seq_length 2048 \
                 --eval_data_files {eval_path} \
 
             """

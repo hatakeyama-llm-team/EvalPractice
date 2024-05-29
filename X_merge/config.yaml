@@ -1,4 +1,4 @@
-base_model: hatakeyama-llm-team/2_0524with_halcination_little_codes_epoch3
+base_model: hatakeyama-llm-team/with_halcination_epoch4_ck10400
 #gate_mode: cheap_embed
 #gate_mode: hidden 
 gate_mode: random
@@ -10,7 +10,7 @@ experts:
   - source_model: hatakeyama-llm-team/with_halcination_epoch4_ck10400
     positive_prompts:
       - 指示
-  - source_model: hatakeyama-llm-team/2_0524with_halcination_little_codes_epoch3
+  - source_model: /home/hatakeyama/python/EvalPractice/X_merge/merged_models/hayashi_0529tk-dpo-test-lr5e-6-beta0.01
     positive_prompts:
       - 指示
 

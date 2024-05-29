@@ -138,7 +138,8 @@ def main() -> None:
         print("do eval")
         eval_dataset = load_datasets(sft_training_args.eval_data_files)
         training_args.do_eval = True
-        training_args.evaluation_strategy = "epoch"
+        training_args.evaluation_strategy = "steps"
+        training_args.eval_steps= 50
     else:
         eval_dataset = None
 
