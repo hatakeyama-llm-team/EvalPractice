@@ -7,8 +7,9 @@ from datasets import load_dataset
 from transformers import AutoTokenizer, AutoModelForCausalLM
 
 
+run_name = "with_halcination_little_codes_ck5200__dpo-lr5e-6-beta0.1"
 # Load model and tokenizer
-model_id = "hatakeyama-llm-team/with_halcination_epoch4_ck10400"
+model_id = "hatakeyama-llm-team/with_halcination_little_codes_ck5200"
 model = AutoModelForCausalLM.from_pretrained(model_id,device_map="auto")
 tokenizer = AutoTokenizer.from_pretrained(model_id)
 
@@ -21,7 +22,6 @@ eval_dataset = load_dataset("hatakeyama-llm-team/dpo_data_for_tanuki", split="te
 # %%
 
 
-run_name = "with_halcination_little_codes_ck5200__dpo-lr5e-6-beta0.5"
 
 os.environ["WANDB_PROJECT"] = "huggingface"
 os.environ["WANDB_NAME"] = run_name
@@ -37,7 +37,7 @@ training_args = TrainingArguments(
     num_train_epochs=5,
     logging_steps=1,
     eval_strategy="steps",
-    eval_steps=200,
+    eval_steps=50,
     save_strategy="epoch",
     remove_unused_columns=False,
     bf16=True,
@@ -53,7 +53,7 @@ training_args = TrainingArguments(
 dpo_trainer = DPOTrainer(
     model,
     args=training_args,
-    beta=0.5,
+    beta=0.1,
     loss_type="sigmoid",
     max_prompt_length=925,
     max_length=1150,
