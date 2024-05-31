@@ -7,7 +7,7 @@ from datasets import load_dataset
 from transformers import AutoTokenizer, AutoModelForCausalLM
 
 
-run_name = "0529_hatakeyama_with_halci_epoch4_dpo-lr5e-6-beta0.8_real"
+run_name = "0529_hatakeyama_with_halci_epoch4_dpo-lr5e-6-beta0.2"
 # Load model and tokenizer
 model_id = "hatakeyama-llm-team/with_halcination_little_codes_ck5200"
 model = AutoModelForCausalLM.from_pretrained(model_id,device_map="auto")
@@ -53,7 +53,7 @@ training_args = TrainingArguments(
 dpo_trainer = DPOTrainer(
     model,
     args=training_args,
-    beta=0.8,
+    beta=0.2,
     loss_type="sigmoid",
     max_prompt_length=925,
     max_length=1150,

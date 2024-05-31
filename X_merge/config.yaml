@@ -1,4 +1,4 @@
-base_model: hatakeyama-llm-team/with_halcination_epoch4_ck10400
+base_model: /home/hatakeyama/python/EvalPractice/dpo/with_halcination_little_codes_ck5200__dpo-lr5e-6-beta0.1/checkpoint-625
 #gate_mode: cheap_embed
 #gate_mode: hidden 
 gate_mode: random
@@ -7,10 +7,10 @@ experts:
  # - source_model: hatakeyama-llm-team/Tanuki-Soup-Test-v2
  #   positive_prompts:
  #     - 指示
-  - source_model: hatakeyama-llm-team/with_halcination_epoch4_ck10400
+  - source_model: /home/hatakeyama/python/EvalPractice/dpo/with_halcination_little_codes_ck5200__dpo-lr5e-6-beta0.1/checkpoint-312
     positive_prompts:
       - 指示
-  - source_model: /home/hatakeyama/python/EvalPractice/X_merge/merged_models/hayashi_0529tk-dpo-test-lr5e-6-beta0.01
+  - source_model: /home/hatakeyama/python/EvalPractice/dpo/with_halcination_little_codes_ck5200__dpo-lr5e-6-beta0.1/checkpoint-625
     positive_prompts:
       - 指示
 
