@@ -49,3 +49,7 @@ sbatch --nodelist=slurm0-a3-ghpc-[13] --gpus-per-node=8 --time=30-00:00:00 -c 20
 
 #merged, 日英synth
 sbatch --nodelist=slurm0-a3-ghpc-[13] --gpus-per-node=8 --time=30-00:00:00 -c 200 run.sh 0524ft_run_merge.py 0524with_halcination_little_codes_synth_eng 0524with_halcination_little_codes_synth_eng
+
+
+#0602 math
+sbatch --nodelist=slurm0-a3-ghpc-[1] --gpus-per-node=8 --time=30-00:00:00 -c 200 run.sh 0524ft_run.py data/0602with_halcination_math 0602with_halcination_math

@@ -4,12 +4,28 @@ import random
 import argparse
 import time
 
+# argparseのパーサーを作成
+parser = argparse.ArgumentParser(description='引数を取るサンプルスクリプト')
+parser.add_argument('data_dir', type=str, help='1')
+parser.add_argument('job_name', type=str, help='2')
+
+args = parser.parse_args()
+job_name=args.job_name
+
+data_dir=args.data_dir
+inst_path_list = (glob.glob(f"{data_dir}/*.parquet"))
+
+#evalは抜く
+inst_path_list=[i for i in inst_path_list if i.find("_eval.parquet")==-1]
+print(inst_path_list)
+
 
 lr_list = [
      "5e-5",
 ]
 
 model_name_list=[
+#"hatakeyama-llm-team/Tanuki_pretrained_stage6_step62160",
 "/storage5/llm/models/hf/step62160_fin",
 ]
 
@@ -31,9 +47,9 @@ for model_name in model_name_list:
             print(model_name)
             print(out_path)
             
-            #if os.path.exists(out_path):
-            #    print("aldeady done")
-            #    continue
+            if os.path.exists(out_path):
+                print("aldeady done")
+                continue
 
 
             #マルチgpu
@@ -41,7 +57,30 @@ for model_name in model_name_list:
             #通常
             #pre_cmd="python ./llm-jp-sft/train.py"
 
-            cmd = f"""{pre_cmd}
+            #--save_steps 1000 \
+            cmd = f"""{pre_cmd}  \
+                --num_train_epochs 3 \
+                --per_device_train_batch_size 5 \
+                --per_device_eval_batch_size 3 \
+                --save_strategy "steps" \
+                --save_steps 1000 \
+                --logging_steps 1 \
+                --gradient_accumulation_steps 16 \
+                --learning_rate {lr} \
+                --warmup_ratio 0.1 \
+                --lr_scheduler_type cosine \
+                --bf16 \
+                --data_files {inst_path} \
+                --model_name_or_path {model_name} \
+                --use_fast True \
+                --output_dir {out_path} \
+                --instruction_template "\n\n### 指示:\n" \
+                --response_template "\n\n### 応答:\n" \
+                --use_flash_attention_2 True \
+                --gradient_checkpointing true \
+                --max_seq_length 4096 \
+                --eval_data_files {eval_path} \
+
             """
 
             #--load_in_4bit True \

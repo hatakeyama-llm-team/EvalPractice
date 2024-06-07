@@ -13,7 +13,7 @@ args = parser.parse_args()
 job_name=args.job_name
 
 data_dir=args.data_dir
-data_dir='/storage5/EvalPractice/3_finetune/data/0524with_halcination_little_codes_synth_eng'
+#data_dir='/storage5/EvalPractice/3_finetune/data/0524with_halcination_little_codes_synth_eng'
 inst_path_list = (glob.glob(f"{data_dir}/*.parquet"))
 
 #evalは抜く
